@@ -28,16 +28,16 @@ void running(Dino *dino)
     while (1) {
         waitForVblank();
         if (!jump) {
-            if (KEY_DOWN_NOW(KEY_INDEX_UP)) {
+            if (KEY_DOWN_NOW(BUTTON_INDEX_UP)) {
                 jump = true;
+                dino->loc.y = 50;
             }
-            dino->loc.y = 50;
         }
-        jump = KEY_DOWN_NOW(KEY_INDEX_UP);
+        jump = KEY_DOWN_NOW(BUTTON_INDEX_UP);
         switch (state) {
             case STATE_STILL:
                 state = STATE_RIGHT;
-                drawImage(GROUND + dino->loc.y, dino->loc.x, DINO_RIGHT_HEIGHT, DINO_RIGHT_WIDTH, dino_right);
+                drawImage(GROUND - dino->loc.y, dino->loc.x, DINO_RIGHT_HEIGHT, DINO_RIGHT_WIDTH, dino_right);
                 break;
             case STATE_RIGHT:
                 if (right < STEP) {
@@ -45,7 +45,7 @@ void running(Dino *dino)
                 } else {
                     right = 0;
                     state = STATE_LEFT;
-                    drawImage(GROUND + dino->loc.y, dino->loc.x, DINO_LEFT_HEIGHT, DINO_LEFT_WIDTH, dino_left);
+                    drawImage(GROUND - dino->loc.y, dino->loc.x, DINO_LEFT_HEIGHT, DINO_LEFT_WIDTH, dino_left);
                 }
                 break;
             case STATE_LEFT:
@@ -54,7 +54,7 @@ void running(Dino *dino)
                 } else {
                     left = 0;
                     state = STATE_RIGHT;
-                    drawImage(GROUND + dino->loc.y, dino->loc.x, DINO_RIGHT_HEIGHT, DINO_RIGHT_WIDTH, dino_right);
+                    drawImage(GROUND - dino->loc.y, dino->loc.x, DINO_RIGHT_HEIGHT, DINO_RIGHT_WIDTH, dino_right);
                 }
                 break;
         }
