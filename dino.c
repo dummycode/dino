@@ -27,9 +27,13 @@ void running(Dino *dino)
     
     while (1) {
         waitForVblank();
-        if (!jump && KEY_DOWN_NOW(BUTTON_INDEX_UP)) {
+        if (!jump) {
+            if (KEY_DOWN_NOW(KEY_INDEX_UP)) {
+                jump = true;
+            }
             dino->loc.y = 50;
         }
+        jump = KEY_DOWN_NOW(KEY_INDEX_UP);
         switch (state) {
             case STATE_STILL:
                 state = STATE_RIGHT;
