@@ -15,7 +15,7 @@ IMAGES = $(wildcard img/*.c)
 # that will be compiled into your program. For example
 # if you have main.c and myLib.c then in the following
 # line you would put main.o and myLib.o
-OFILES = main.o dino.o graphics.o $(patsubst %.c, %.o, $(IMAGES))
+OFILES = main.o dino.o graphics.o text.o font.o $(patsubst %.c, %.o, $(IMAGES))
 
 ################################################################################
 # These are various settings used to make the GBA toolchain work

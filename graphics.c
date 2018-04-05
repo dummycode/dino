@@ -21,6 +21,11 @@ void drawImage(int row, int col, int width, int height, const unsigned short* im
     }
 }
 
+void setPixel(int row, int col, unsigned short color) 
+{
+    videoBuffer[OFFSET(row, col, 240)] = color;
+}
+
 void waitForVblank()
 {
     while (*SCANLINECOUNTER > 160)

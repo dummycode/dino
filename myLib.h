@@ -447,6 +447,5 @@ void myfunction(void) MEM_FUNC_IN_IWRAM;
 // Prototypes
 void waitForVblank();
 
-
 // Macros
 #define OFFSET(r, c, w) ((r) * (w) + (c))
