@@ -101,9 +101,9 @@ int main(void)
  */
 void drawMenu() 
 {
-    drawString(10, 10, "Press start to begin", TEXT_COLOR, BACKGROUND_COLOR);
-    drawString(20, 10, "Press select to read rules", TEXT_COLOR, BACKGROUND_COLOR);
     drawImage(10, 65, 110, 58, title);
+    drawString(75, 60, "Press start to begin", TEXT_COLOR, BACKGROUND_COLOR);
+    drawString(85, 42, "Press select to read rules", TEXT_COLOR, BACKGROUND_COLOR);
 }
 
 /**
