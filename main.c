@@ -18,7 +18,7 @@ int main(void)
     REG_DISPCNT = MODE3 | BG2_ENABLE;
     
     drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
-    
+        
     Dino dino = (Dino) {
         STATE_STILL,
         (Point) {0, 0}, 
@@ -36,6 +36,11 @@ int main(void)
         switch (state) {
             case MENU:
                 drawMenu();
+                if (KEY_DOWN_NOW(BUTTON_START)) {
+                    // Clear screen
+                    drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
+                    state = PLAYING;
+                }
                 break;
             case PLAYING:
                 drawDino(&dino);
@@ -49,5 +54,5 @@ int main(void)
 
 void drawMenu() 
 {
-    drawString(0, 0, "Test0", 0x294a, BACKGROUND_COLOR);
+    drawString(0, 0, "Press start to begin", 0x294a, BACKGROUND_COLOR);
 }
