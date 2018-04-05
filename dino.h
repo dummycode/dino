@@ -27,8 +27,6 @@ typedef struct {
     Vector vel;
     Feet feet;
     int lastUpdated;
-    int height; 
-    bool ground;
     int timeInAir;
 } Dino;
 
