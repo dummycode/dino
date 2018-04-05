@@ -26,6 +26,7 @@ typedef struct {
     Point loc;
     Vector vel;
     Feet feet;
+    int lastUpdated;
     int height; 
     bool ground;
     int timeInAir;

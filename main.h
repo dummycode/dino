@@ -2,6 +2,7 @@
 #define MAIN_H
 
 void drawMenu();
+void drawPauseMenu();
 
 #endif
 
