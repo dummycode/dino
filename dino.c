@@ -43,7 +43,7 @@ void drawDino(Dino *dino)
 }
 
 void updateDino(Dino *dino) {
-    if (dino->lastUpdated < 5) {
+    if (dino->lastUpdated < 3) {
         dino->lastUpdated += 1;
     } else {
         // Clear current dino 

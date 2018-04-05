@@ -3,9 +3,8 @@
 
 #include <stdbool.h>
 
-bool jumped = false;
-
 void drawGame(Dino *dino, bool *selectPressed, GameState *state);
+void drawScore(int *score);
 
 #endif
 
