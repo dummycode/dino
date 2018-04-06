@@ -11,20 +11,18 @@
 #define STEP 5
 #define GROUND 75
 
-void drawDino(Dino *dino)
+void updateDinoState(Dino *dino)
 {   
     switch (dino->state) {
         case STATE_STILL:
-            if (dino->loc.y == 0 && dino->vel.y == 0) {
+            if (dino->p.y == 0 && dino->v.y == 0) {
                 dino->state = STATE_RIGHT;
             } else {
-                drawImage(GROUND - dino->loc.y, dino->loc.x, DINO_STILL_HEIGHT, DINO_STILL_WIDTH, dino_still);
             }
             break;
         case STATE_RIGHT:
             if (dino->feet.right < STEP) {
                 dino->feet.right += 1;
-                drawImage(GROUND - dino->loc.y, dino->loc.x, DINO_RIGHT_HEIGHT, DINO_RIGHT_WIDTH, dino_right);
             } else {
                 dino->feet.right = 0;
                 dino->state = STATE_LEFT;
@@ -33,31 +31,46 @@ void drawDino(Dino *dino)
         case STATE_LEFT:
             if (dino->feet.left < STEP) {
                 dino->feet.left += 1;
-                drawImage(GROUND - dino->loc.y, dino->loc.x, DINO_LEFT_HEIGHT, DINO_LEFT_WIDTH, dino_left);
             } else {
                 dino->feet.left = 0;
                 dino->state = STATE_RIGHT;
             }
             break;
+    }     
+}
+
+void drawDino(Dino *dino) 
+{
+    switch (dino->state) {
+        case STATE_STILL:
+            drawImage(GROUND - dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_still);
+            break;
+        case STATE_RIGHT:
+            drawImage(GROUND - dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_right);
+            break;
+        case STATE_LEFT:
+            drawImage(GROUND - dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_left);
+            break;
+    } 
+}
+
+void updateDino(Dino *dino) 
+{
+    // Every 4 ticks, update time in air
+    if (*pcounter % 4 == 0) {
+        dino->timeInAir += 1;
+    }
+    dino->np.y = dino->p.y + dino->v.y;
+    dino->nv.y = dino->v.y - dino->timeInAir;
+    
+    if (dino->np.y < 0) {
+        dino->np.y = 0;
+        dino->nv.y = 0;
     }
 }
 
-void updateDino(Dino *dino) {
-    if (dino->lastUpdated < 3) {
-        dino->lastUpdated += 1;
-    } else {
-        // Clear current dino 
-        drawRectangle(GROUND - dino->loc.y, dino->loc.x, DINO_STILL_WIDTH, DINO_STILL_HEIGHT, BACKGROUND_COLOR);
-        
-        dino->lastUpdated = 0;
-        dino->loc.y += dino->vel.y;
-        dino->vel.y -= dino->timeInAir;
-        dino->timeInAir += 1;
-        
-        if (dino->loc.y < 0) {
-            dino->loc.y = 0;
-            dino->vel.y = 0;
-        }
-    }
+void clearOldDino(Dino *dino)
+{
+    drawRectangle(GROUND - dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, BACKGROUND_COLOR);
 }
 

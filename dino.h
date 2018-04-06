@@ -23,16 +23,21 @@ typedef struct {
 
 typedef struct {
     DinoState state;
-    Point loc;
-    Vector vel;
+    Point p;
+    Point np;
+    Vector v;
+    Vector nv;
     Feet feet;
-    int lastUpdated;
     int timeInAir;
 } Dino;
 
 // Prototypes
 void drawDino(Dino *dino);
+void updateDinoState(Dino *dino);
 void updateDino(Dino *dino);
+void clearOldDino(Dino *dino);
+
+extern volatile unsigned short *pcounter;
 
 #endif
 

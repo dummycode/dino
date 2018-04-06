@@ -4,6 +4,8 @@
 // Vars
 #define SCREEN_WIDTH 240
 #define SCREEN_HEIGHT 160
+#define DINO_HEIGHT 25
+#define DINO_WIDTH 25
 
 // MACROS
 #define OFFSET(r, c, w) ((r) * (w) + (c))

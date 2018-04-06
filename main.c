@@ -8,10 +8,18 @@
 #include "game.h"
 
 #include <stdbool.h>
+#include <limits.h>
+#include <stdio.h>
+
+// Vars
+volatile unsigned short counter;
+volatile unsigned short *pcounter = &counter;
 
 int main(void) 
 {
     REG_DISPCNT = MODE3 | BG2_ENABLE;
+    
+    *pcounter = 0;
     
     drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
     
@@ -22,15 +30,25 @@ int main(void)
     
     Dino dino = (Dino) {
         STATE_STILL,
-        (Point) {0, 0},
-        (Vector) {0, 0},
+        (Point) {0, 0}, // Current location
+        (Point) {0, 0}, // New location
+        (Vector) {0, 0}, // Current velocity
+        (Vector) {0, 0}, // New velocity
         (Feet) {0, 0},
-        0,
         0,
     };
 
     while (1) {
-        waitForVblank();
+        if (*pcounter == SHRT_MAX) {
+            *pcounter = 0;
+        }
+        *pcounter += 1;
+        
+        char buffer[1024];
+        sprintf(buffer, "C: %u", *pcounter);
+        drawString(0, 0, buffer, TEXT_COLOR, BACKGROUND_COLOR);
+        
+        
         switch (state) {
             case MENU:
                 drawMenu();
@@ -101,6 +119,7 @@ int main(void)
  */
 void drawMenu() 
 {
+    waitForVblank();
     drawImage(10, 65, 110, 58, title);
     drawString(75, 60, "Press start to begin", TEXT_COLOR, BACKGROUND_COLOR);
     drawString(85, 42, "Press select to read rules", TEXT_COLOR, BACKGROUND_COLOR);
@@ -111,6 +130,7 @@ void drawMenu()
  */
 void drawPauseMenu()
 {
+    waitForVblank();
     drawString(10, 10, "Paused. Press start to continue.", TEXT_COLOR, BACKGROUND_COLOR);
 }
 
