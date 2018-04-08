@@ -45,7 +45,7 @@ int main(void)
         *pcounter += 1;
         
         char buffer[1024];
-        sprintf(buffer, "C: %u", *pcounter);
+        sprintf(buffer, "C: %i", *pcounter);
         drawString(0, 0, buffer, TEXT_COLOR, BACKGROUND_COLOR);
         
         
@@ -55,6 +55,8 @@ int main(void)
                 
                 if (!startPressed) {
                     if (KEY_DOWN_NOW(BUTTON_START)) {
+                        // Reset game state
+                        resetGame();
                         // Clear screen
                         clearScreen();
                         state = PLAYING;
@@ -66,6 +68,8 @@ int main(void)
                     if (KEY_DOWN_NOW(BUTTON_SELECT)) {
                         selectPressed = true;
                         // Clear screen
+                        drawRectangle(24, 27, 186, 106, BLACK);
+                        drawRectangle(27, 30, 180, 100, TEXT_COLOR);
                         state = RULES;
                     }   
                 }
@@ -131,7 +135,7 @@ void drawMenu()
 void drawPauseMenu()
 {
     waitForVblank();
-    drawString(10, 10, "Paused. Press start to continue.", TEXT_COLOR, BACKGROUND_COLOR);
+    drawString(13, 5, "Paused. Press start to continue.", TEXT_COLOR, BACKGROUND_COLOR);
 }
 
 /**
@@ -139,7 +143,13 @@ void drawPauseMenu()
  */
 void drawRules()
 {
-    drawString(10, 10, "Rules", TEXT_COLOR, BACKGROUND_COLOR);
+    waitForVblank(); 
+    drawString(29, 32, "Rules", WHITE, TEXT_COLOR);
+    drawString(41, 32, "Press \"Up\" to jump", WHITE, TEXT_COLOR);
+    drawString(51, 32, "Avoid the enemies", WHITE, TEXT_COLOR);
+    drawString(61, 32, "Have fun", WHITE, TEXT_COLOR);
+    drawString(71, 32, "That's it :)", WHITE, TEXT_COLOR);
+    drawString(117, 32, "Start to close", WHITE, TEXT_COLOR);
 }
 
 /**

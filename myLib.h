@@ -41,8 +41,6 @@ extern volatile unsigned short *videoBuffer;               // 0x6000000
 #define REG_DISPCNT  *(volatile unsigned short *) 0x4000000
 #define SCANLINECOUNTER (volatile unsigned short *)0x4000006
 
-#define COLOR(r,g,b) ((r) + ((g) << 5) + ((b) << 10))
-
 
 // Mode 4
 #define BUFFER0 (volatile unsigned short *)0x6000000
@@ -75,16 +73,6 @@ extern screenblock *screenbase;
 #define REG_BG1CNT *(volatile unsigned short*)0x400000A
 #define REG_BG2CNT *(volatile unsigned short*)0x400000C
 #define REG_BG3CNT *(volatile unsigned short*)0x400000E
-
-#define BLACK   COLOR(0,0,0)
-#define WHITE   COLOR(31, 31, 31)
-#define RED     COLOR(31,0,0)
-#define GREEN   COLOR(0, 31, 0)
-#define BLUE    COLOR(0,0,31)
-#define YELLOW  COLOR(31,31,0)
-#define CYAN    COLOR(0,31,31)
-#define MAGENTA COLOR(31,0,31)
-#define GRAY    COLOR(25, 25, 25)
 
 #define MODE0 0
 #define MODE1 1
