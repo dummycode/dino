@@ -8,7 +8,7 @@
 
 #include <stdbool.h>
 
-#define STEP 5
+#define STEP 3
 #define GROUND 75
 
 void updateDinoState(Dino *dino)
@@ -57,11 +57,10 @@ void drawDino(Dino *dino)
 void updateDino(Dino *dino) 
 {
     // Every 4 ticks, update time in air
-    if (*pcounter % 4 == 0) {
-        dino->timeInAir += 1;
-    }
+    dino->timeInAir += 1;
+    int mult = dino->timeInAir / 5;
     dino->np.y = dino->p.y + dino->v.y;
-    dino->nv.y = dino->v.y - dino->timeInAir;
+    dino->nv.y = dino->v.y - mult;
     
     if (dino->np.y < 0) {
         dino->np.y = 0;

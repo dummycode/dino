@@ -27,7 +27,7 @@ void drawGame(Dino *dino, bool *selectPressed, GameState *state)
         // If on ground and up pressed, jump!
         if (KEY_DOWN_NOW(BUTTON_UP) && dino->p.y == 0) {
             jumped = true;
-            dino->v.y = 10;
+            dino->v.y = 8;
             dino->timeInAir = 0;
             dino->state = STATE_STILL;
         }
