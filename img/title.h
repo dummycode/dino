@@ -1,7 +1,7 @@
 /*
  * Exported with nin10kit v1.7
  * Invocation command was nin10kit --mode=3 --resize=110x58 title title.png 
- * Time-stamp: Thursday 04/05/2018, 09:28:25
+ * Time-stamp: Sunday 04/08/2018, 16:12:03
  * 
  * Image Information
  * -----------------

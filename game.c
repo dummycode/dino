@@ -18,9 +18,8 @@ bool jumped = false;
 int step = 50;
 const int minStep = 2;
 volatile unsigned int score;
-Enemy enemies[MAX_ENEMIES];
 
-void drawGame(Dino *dino, bool *selectPressed, GameState *state)
+void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state)
 {   
     if (KEY_DOWN_NOW(BUTTON_SELECT)) {
         *selectPressed = true;
@@ -40,21 +39,17 @@ void drawGame(Dino *dino, bool *selectPressed, GameState *state)
     updateDino(dino);
     updateDinoState(dino);
     
-    updateEnemies();
-    
-    if (didLose(dino)) {
-    
-    }
+    updateEnemies(enemies);
     
     waitForVblank();
     
     drawGround();
     clearOldDino(dino);
-    clearOldEnemies();
+    clearOldEnemies(enemies);
     
     // Update values of enemies
-    updateLocationOfEnemies();
-    drawEnemies();
+    updateLocationOfEnemies(enemies);
+    drawEnemies(enemies);
     
     
     // Update values of dino
@@ -97,7 +92,7 @@ void resetGame()
     score = 0;
 }
 
-void updateLocationOfEnemies()
+void updateLocationOfEnemies(Enemy *enemies)
 {
     for (int i = 0; i < MAX_ENEMIES; i++) {
         if (enemies[i].alive)
@@ -106,7 +101,7 @@ void updateLocationOfEnemies()
     }
 }
 
-void updateEnemies()
+void updateEnemies(Enemy *enemies)
 {
     for (int i = 0; i < MAX_ENEMIES; i++) {
         if (enemies[i].alive)
@@ -114,19 +109,19 @@ void updateEnemies()
     }
 }
 
-void drawEnemies()
+void drawEnemies(Enemy *enemies)
 {
     for (int i = 0; i < MAX_ENEMIES; i++) {
-        if (enemies[i].alive)
+        if (enemies[i].alive) {
             drawEnemy(&enemies[i]);
+        }
     }
 }
 
-void clearOldEnemies()
+void clearOldEnemies(Enemy *enemies)
 {
     for (int i = 0; i < MAX_ENEMIES; i++) {
-        if (enemies[i].alive)
-            clearOldEnemy(&enemies[i]);
+        clearOldEnemy(&enemies[i]);
     }
 }
 

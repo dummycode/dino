@@ -6,6 +6,8 @@
 #include "text.h"
 #include "main.h"
 #include "game.h"
+#include "enemy.h"
+#include "img/bird.h"
 
 #include <stdbool.h>
 #include <limits.h>
@@ -36,6 +38,18 @@ int main(void)
         (Vector) {0, 0}, // New velocity
         (Feet) {0, 0},
         0,
+    };
+    
+    Enemy enemies[2];
+    
+    enemies[0] = (Enemy) {
+        true,
+        (Point) {240, 20},
+        (Point) {0, 0},
+        (Vector) {-1, 0},
+        (Vector) {0, 0},
+        (Size) {25, 25},
+        bird,
     };
 
     while (1) {
@@ -77,7 +91,7 @@ int main(void)
                 break;
                 
             case PLAYING:
-                drawGame(&dino, &selectPressed, &state);
+                drawGame(&dino, enemies, &selectPressed, &state);
                 break;
                 
             case PAUSED:

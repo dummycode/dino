@@ -12,6 +12,7 @@
 
 // Prototypes
 void drawImage(int row, int col, int width, int height, const unsigned short* image);
+void drawImageSketchy(int row, int col, int width, int height, const unsigned short* image); 
 void drawRectangle(int row, int col, int width, int height, unsigned int color); 
 void setPixel(int row, int col, unsigned short color);
 void waitForVblank();
