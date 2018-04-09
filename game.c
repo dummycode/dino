@@ -156,27 +156,27 @@ bool didLose(Dino *dino, Enemy *enemies)
         Enemy enemy = enemies[i];
         if (enemy.alive) {
             // If left corner is in
-            int x = dino->p.x;
-            int y = dino->p.y;
-            if (x > enemy.p.x && (x < enemy.p.x + (int) enemy.size.width) && y > enemy.p.y && (y < enemy.p.y + (int) enemy.size.height)) {
+            int x = enemy.p.x;
+            int y = enemy.p.y;
+            if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
                 return true;
             }
             // Bottom left
-            x = dino->p.x;
-            y = dino->p.y + DINO_HEIGHT;
-            if (x > enemy.p.x && (x < enemy.p.x + (int) enemy.size.width) && y > enemy.p.y && (y < enemy.p.y + (int) enemy.size.height)) {
+            x = enemy.p.x;
+            y = enemy.p.y + enemy.size.height;
+            if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
                 return true;
             }
             // Bottom right
-            x = dino->p.x + DINO_WIDTH;
-            y = dino->p.y + DINO_HEIGHT;
-            if (x > enemy.p.x && (x < enemy.p.x + (int) enemy.size.width) && y > enemy.p.y && (y < enemy.p.y + (int) enemy.size.height)) {
+            x = enemy.p.x + enemy.size.width;
+            y = enemy.p.y + enemy.size.height;
+            if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
                 return true;
             }
             // Top right
-            x = dino->p.x + DINO_WIDTH;
-            y = dino->p.y;
-            if (x > enemy.p.x && (x < enemy.p.x + (int) enemy.size.width) && y > enemy.p.y && (y < enemy.p.y + (int) enemy.size.height)) {
+            x = enemy.p.x + enemy.size.width;
+            y = enemy.p.y;
+            if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
                 return true;
             }
         }
