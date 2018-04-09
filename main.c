@@ -45,14 +45,11 @@ int main(void)
     Enemy enemies[2];
 
     while (1) {
-        if (counter == SHRT_MAX) {
-            counter = 0;
-        }
         counter += 1;
         
         char buffer[1024];
         drawString(0, 0, buffer, TEXT_COLOR, BACKGROUND_COLOR);
-
+      
         switch (state) {
             case LAUNCH:
                 drawLaunch();
@@ -219,7 +216,11 @@ void clearScreen()
     drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
 }
 
+/**
+ * Logic to draw the launch screen
+ */
 void drawLaunch()
 {
-    drawImage(0, 0, 240, 240, launch);
+    waitForVblank();
+    drawImage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, launch);
 }
