@@ -107,9 +107,6 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
 
 void drawScore()
 {
-    if (counter % 1000 == 0) {
-        score = 0;
-    }
     score += 1 * mult;
     
     if (score % 25 == 0) {
