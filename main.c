@@ -17,6 +17,8 @@
 volatile unsigned short counter;
 volatile unsigned short *pcounter = &counter;
 
+unsigned int highScore = 0;
+
 int main(void) 
 {
     REG_DISPCNT = MODE3 | BG2_ENABLE;
@@ -178,6 +180,9 @@ void drawMenu()
     drawImage(10, 65, 110, 58, title);
     drawString(75, 60, "Press start to begin", TEXT_COLOR, BACKGROUND_COLOR);
     drawString(85, 42, "Press select to read rules", TEXT_COLOR, BACKGROUND_COLOR);
+    char buffer[1024];
+    sprintf(buffer, "High score: %05u", highScore);
+    drawString(95, 52, buffer, WHITE, TEXT_COLOR);
 }
 
 /**

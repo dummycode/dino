@@ -8,12 +8,14 @@
 #include "enemy.h"
 #include "img/bird.h"
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 
 #define GROUND 100
 #define MAX_ENEMIES 2
 #define UNUSED(x) (void) x
+#define MIN_Y 40
 
 bool jumped = false;
 int step = 50;
@@ -62,25 +64,48 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
     
         
     if (didLose(dino, enemies)) {
-        // TODO: Update high score
+        // Update high score
+        extern unsigned int highScore;
+        if (score > highScore) {
+            highScore = score;
+        }
         clearScreen();
-        // Clear screen
+        
+        for (int i = 0; i < MAX_ENEMIES; i++) {
+            enemies[i].alive = false;
+        }
+        
+        // Draw dialog box
         drawRectangle(24, 27, 186, 106, BLACK);
         drawRectangle(27, 30, 180, 100, TEXT_COLOR);
         *state = LOST;
     }
         
-    if (num_enemies == 0) {
-        enemies[0] = (Enemy) {
-            true,
-            (Point) {240, 65},
-            (Point) {0, 0},
-            (Vector) {-4, 0},
-            (Vector) {0, 0},
-            (Size) {15, 15},
-            bird,
-        };
-        num_enemies += 1;
+    if (num_enemies < MAX_ENEMIES) {
+        // Decide if we should place another enemy
+        srand(*pcounter);
+        int p = rand() % (100 + 1 - 0) + 0;
+        if (p < 20) {         
+            //rand() % (max + 1 - min) + min;
+            int yStart = rand() % (65 + 1 - MIN_Y) + MIN_Y;
+            int xVelocity = rand() % (-3 + 1 - (-3)) + (-3);
+            int yVelocity = rand() % (2 + 1 - (-2)) + (-2);
+            int i;
+            for (i = 0; i < MAX_ENEMIES; i++) {
+                if (!enemies[i].alive)
+                    break;
+            }
+            enemies[i] = (Enemy) {
+                true,
+                (Point) {240, yStart},
+                (Point) {0, 0},
+                (Vector) {xVelocity, yVelocity},
+                (Vector) {0, 0},
+                (Size) {15, 15},
+                bird,
+            };
+            num_enemies += 1;
+        }
     }
 }
 
@@ -150,8 +175,6 @@ void clearOldEnemies(Enemy *enemies)
  */
 bool didLose(Dino *dino, Enemy *enemies)
 {
-    UNUSED(dino);
-    // Iterate through all enemies, calculating if the dino is colliding with any of them
     for (int i = 0; i < MAX_ENEMIES; i++) {
         Enemy enemy = enemies[i];
         if (enemy.alive) {

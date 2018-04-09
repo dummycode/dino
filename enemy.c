@@ -5,8 +5,8 @@
 
 #include <stdbool.h>
 
-#define GROUND 75
-#define MIN_HEIGHT 0
+#define GROUND 100
+#define MIN_Y 40
 
 void drawEnemy(Enemy *enemy) 
 {
@@ -15,6 +15,10 @@ void drawEnemy(Enemy *enemy)
 
 void updateEnemy(Enemy *enemy) 
 {
+    if (enemy->p.y + enemy->size.height > GROUND || enemy->p.y < MIN_Y) {
+        enemy->v.y = -enemy->v.y;
+    }
+
     enemy->np.x = enemy->p.x + enemy->v.x;
     enemy->np.y = enemy->p.y + enemy->v.y;
     
@@ -22,10 +26,6 @@ void updateEnemy(Enemy *enemy)
         enemy->alive = false;
         num_enemies -= 1;
     } 
-    
-    if (enemy->np.y + enemy->size.height > GROUND || enemy->np.y < MIN_HEIGHT) {
-        enemy->np.y = GROUND + MIN_HEIGHT / 2;
-    }
     
     enemy->nv.x = enemy->v.x;
     enemy->nv.y = enemy->v.y;
