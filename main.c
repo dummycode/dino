@@ -47,19 +47,23 @@ int main(void)
     while (1) {
         counter += 1;
         
+        char buffer[1024];
+        drawString(0, 0, buffer, TEXT_COLOR, BACKGROUND_COLOR);
+      
         switch (state) {
             case LAUNCH:
                 drawLaunch();
                 
                 if (!startPressed) {
                     if (KEY_DOWN_NOW(BUTTON_START)) {
-                        // Reset game state
+                        startPressed = true;
+                        // Clear screen
                         clearScreen();
                         state = MENU;
-                    }
+                    }   
                 }
-                startPressed = KEY_DOWN_NOW(BUTTON_START);
-                break;
+                startPressed = KEY_DOWN_NOW(BUTTON_START); 
+                break;  
                 
             case MENU:
                 drawMenu();
