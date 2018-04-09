@@ -51,6 +51,8 @@ int main(void)
         (Size) {15, 15},
         bird,
     };
+    
+    num_enemies += 1;
 
     while (1) {
         if (*pcounter == SHRT_MAX) {
@@ -135,6 +137,20 @@ int main(void)
                 selectPressed = KEY_DOWN_NOW(BUTTON_SELECT);
                 break;
                 
+            case LOST:
+                drawLost();
+                
+                if (!startPressed) {
+                    if (KEY_DOWN_NOW(BUTTON_START)) {
+                        startPressed = true;
+                        // Clear screen
+                        clearScreen();
+                        state = MENU;
+                    }   
+                }
+                startPressed = KEY_DOWN_NOW(BUTTON_START); 
+                break;
+                
             case RULES:
                 drawRules();
                 
@@ -146,7 +162,7 @@ int main(void)
                         state = MENU;
                     }   
                 }
-                selectPressed = KEY_DOWN_NOW(BUTTON_START); 
+                startPressed = KEY_DOWN_NOW(BUTTON_START); 
                 break;  
         }
     }
@@ -184,6 +200,19 @@ void drawRules()
     drawString(51, 32, "Avoid the enemies", WHITE, TEXT_COLOR);
     drawString(61, 32, "Have fun", WHITE, TEXT_COLOR);
     drawString(71, 32, "That's it :)", WHITE, TEXT_COLOR);
+    drawString(117, 32, "Start to close", WHITE, TEXT_COLOR);
+}
+
+/**
+ * Logic to draw the lost page
+ */
+void drawLost()
+{
+    waitForVblank(); 
+    drawString(29, 32, "You lost :(", WHITE, TEXT_COLOR);
+    char buffer[1024];
+    sprintf(buffer, "Your score: %u", score); 
+    drawString(41, 32, buffer, WHITE, TEXT_COLOR);
     drawString(117, 32, "Start to close", WHITE, TEXT_COLOR);
 }
 

@@ -10,9 +10,6 @@
 
 void drawEnemy(Enemy *enemy) 
 {
-//    if (enemy->p.y < 0 || enemy->p.x < 0 || enemy->p.y + enemy->size.width > SCREEN_WIDTH - 1 || enemy->p.x + enemy->size.height > SCREEN_HEIGHT - 1) {
-//        drawImageSketchy(enemy->p.y, enemy->p.x, enemy->size.height, enemy->size.width, enemy->image);
-//    }
     drawImage(enemy->p.y, enemy->p.x, enemy->size.height, enemy->size.width, enemy->image);
 }
 
@@ -23,6 +20,7 @@ void updateEnemy(Enemy *enemy)
     
     if (enemy->np.x < 0) {
         enemy->alive = false;
+        num_enemies -= 1;
     } 
     
     if (enemy->np.y + enemy->size.height > GROUND || enemy->np.y < MIN_HEIGHT) {

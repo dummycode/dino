@@ -6,6 +6,7 @@
 #include "text.h"
 #include "game.h"
 #include "enemy.h"
+#include "img/bird.h"
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -18,6 +19,7 @@ bool jumped = false;
 int step = 50;
 const int minStep = 2;
 volatile unsigned int score;
+volatile int num_enemies = 0;
 
 void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state)
 {   
@@ -41,12 +43,6 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
     
     updateEnemies(enemies);
     
-    if (didLose(dino, enemies)) {
-        // TODO: Update high score
-        clearScreen();
-        *state = MENU;
-    }
-    
     waitForVblank();
     
     drawGround();
@@ -63,6 +59,29 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
     
     drawDino(dino);
     drawScore();
+    
+        
+    if (didLose(dino, enemies)) {
+        // TODO: Update high score
+        clearScreen();
+        // Clear screen
+        drawRectangle(24, 27, 186, 106, BLACK);
+        drawRectangle(27, 30, 180, 100, TEXT_COLOR);
+        *state = LOST;
+    }
+        
+    if (num_enemies == 0) {
+        enemies[0] = (Enemy) {
+            true,
+            (Point) {240, 65},
+            (Point) {0, 0},
+            (Vector) {-4, 0},
+            (Vector) {0, 0},
+            (Size) {15, 15},
+            bird,
+        };
+        num_enemies += 1;
+    }
 }
 
 void drawScore()
