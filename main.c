@@ -15,7 +15,6 @@
 
 // Vars
 volatile unsigned short counter;
-volatile unsigned short *pcounter = &counter;
 
 unsigned int highScore = 0;
 
@@ -23,7 +22,7 @@ int main(void)
 {
     REG_DISPCNT = MODE3 | BG2_ENABLE;
     
-    *pcounter = 0;
+    counter = 0;
     
     drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
     
@@ -57,13 +56,13 @@ int main(void)
     num_enemies += 1;
 
     while (1) {
-        if (*pcounter == SHRT_MAX) {
-            *pcounter = 0;
+        if (counter == SHRT_MAX) {
+            counter = 0;
         }
-        *pcounter += 1;
+        counter += 1;
         
         char buffer[1024];
-        sprintf(buffer, "C: %i", *pcounter);
+        sprintf(buffer, "C: %i", counter);
         drawString(0, 0, buffer, TEXT_COLOR, BACKGROUND_COLOR);
         
         
@@ -182,7 +181,7 @@ void drawMenu()
     drawString(85, 42, "Press select to read rules", TEXT_COLOR, BACKGROUND_COLOR);
     char buffer[1024];
     sprintf(buffer, "High score: %05u", highScore);
-    drawString(95, 52, buffer, WHITE, TEXT_COLOR);
+    drawString(95, 52, buffer, TEXT_COLOR, BACKGROUND_COLOR);
 }
 
 /**

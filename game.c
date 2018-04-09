@@ -83,7 +83,7 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
         
     if (num_enemies < MAX_ENEMIES) {
         // Decide if we should place another enemy
-        srand(*pcounter);
+        srand(counter);
         int p = rand() % (100 + 1 - 0) + 0;
         if (p < 20) {         
             //rand() % (max + 1 - min) + min;
@@ -111,7 +111,7 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
 
 void drawScore()
 {
-    if (*pcounter % step == 0) {
+    if (counter % step == 0) {
         score += 1;
     }
     
