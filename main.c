@@ -8,6 +8,7 @@
 #include "game.h"
 #include "enemy.h"
 #include "img/bird.h"
+#include "img/launch.h"
 
 #include <stdbool.h>
 #include <limits.h>
@@ -26,7 +27,7 @@ int main(void)
     
     drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
     
-    GameState state = MENU;
+    GameState state = LAUNCH;
     
     bool selectPressed = false;
     bool startPressed = false;
@@ -44,17 +45,22 @@ int main(void)
     Enemy enemies[2];
 
     while (1) {
-        if (counter == SHRT_MAX) {
-            counter = 0;
-        }
         counter += 1;
         
-        char buffer[1024];
-        sprintf(buffer, "C: %i", counter);
-        drawString(0, 0, buffer, TEXT_COLOR, BACKGROUND_COLOR);
-        
-        
         switch (state) {
+            case LAUNCH:
+                drawLaunch();
+                
+                if (!startPressed) {
+                    if (KEY_DOWN_NOW(BUTTON_START)) {
+                        // Reset game state
+                        clearScreen();
+                        state = MENU;
+                    }
+                }
+                startPressed = KEY_DOWN_NOW(BUTTON_START);
+                break;
+                
             case MENU:
                 drawMenu();
                 
@@ -204,4 +210,13 @@ void drawLost()
 void clearScreen()
 {
     drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
+}
+
+/**
+ * Logic to draw the launch screen
+ */
+void drawLaunch()
+{
+    waitForVblank();
+    drawImage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, launch);
 }
