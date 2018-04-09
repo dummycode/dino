@@ -131,11 +131,21 @@ void clearOldEnemies(Enemy *enemies)
     }
 }
 
+
+/**
+ * Checks to see if player has lost the game by checking
+ * to see if the dino is in contact with any enemy
+ */
 bool didLose(Dino *dino, Enemy *enemies)
 {
     UNUSED(dino);
-    UNUSED(enemies);
     // Iterate through all enemies, calculating if the dino is colliding with any of them
+    for (int i = 0; i < MAX_ENEMIES; i++) {
+        Enemy enemy = enemies[i];
+        if (enemy.alive) {
+            // Check if each corner is colliding, if so return true
+        }
+    }
     return false;
 }
 
