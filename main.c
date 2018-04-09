@@ -181,7 +181,7 @@ void drawMenu()
     drawString(85, 42, "Press select to read rules", TEXT_COLOR, BACKGROUND_COLOR);
     char buffer[1024];
     sprintf(buffer, "High score: %05u", highScore);
-    drawString(95, 52, buffer, TEXT_COLOR, BACKGROUND_COLOR);
+    drawString(95, 68, buffer, TEXT_COLOR, BACKGROUND_COLOR);
 }
 
 /**

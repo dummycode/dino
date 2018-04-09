@@ -16,10 +16,10 @@
 #define MAX_ENEMIES 2
 #define UNUSED(x) (void) x
 #define MIN_Y 40
+#define SCORE_DIVIDER 100
 
 bool jumped = false;
-int step = 50;
-const int minStep = 2;
+int mult = 1;
 volatile unsigned int score;
 volatile int num_enemies = 0;
 
@@ -65,6 +65,7 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
         
     if (didLose(dino, enemies)) {
         // Update high score
+        score = score / SCORE_DIVIDER;
         extern unsigned int highScore;
         if (score > highScore) {
             highScore = score;
@@ -85,7 +86,7 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
         // Decide if we should place another enemy
         srand(counter);
         int p = rand() % (100 + 1 - 0) + 0;
-        if (p < 20) {         
+        if (p < 30) {         
             //rand() % (max + 1 - min) + min;
             int yStart = rand() % (65 + 1 - MIN_Y) + MIN_Y;
             int xVelocity = rand() % (-3 + 1 - (-3)) + (-3);
@@ -111,19 +112,14 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
 
 void drawScore()
 {
-    if (counter % step == 0) {
-        score += 1;
-    }
+    score += 1 * mult;
     
-    if (score % 50 == 0) {
-        step -= 5;
-        if (step < minStep) {
-            step = minStep;
-        }
+    if (score % 25 == 0) {
+        mult += 1;
     }
     
     char buffer[1024];
-    sprintf(buffer, "Score: %d", score);
+    sprintf(buffer, "Score: %d", score / SCORE_DIVIDER);
     drawString(4, 170, buffer, TEXT_COLOR, BACKGROUND_COLOR);
 }
 
@@ -213,7 +209,7 @@ bool didLose(Dino *dino, Enemy *enemies)
 void resetGame()
 {
     jumped = false;
-    step = 100;
+    mult = 0;
     score = 0;
 }
 
