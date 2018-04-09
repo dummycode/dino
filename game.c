@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define GROUND 75
+#define GROUND 100
 #define MAX_ENEMIES 2
 #define UNUSED(x) (void) x
 
@@ -27,9 +27,9 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
     }
     if (!jumped) {
         // If on ground and up pressed, jump!
-        if (KEY_DOWN_NOW(BUTTON_UP) && dino->p.y == 0) {
+        if (KEY_DOWN_NOW(BUTTON_UP) && (dino->p.y == GROUND - DINO_HEIGHT)) {
             jumped = true;
-            dino->v.y = 8;
+            dino->v.y = -4;
             dino->timeInAir = 0;
             dino->state = STATE_STILL;
         }
@@ -41,6 +41,12 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
     
     updateEnemies(enemies);
     
+    if (didLose(dino, enemies)) {
+        // Update high score
+        // Return to main menu
+        *state = MENU;
+    }
+    
     waitForVblank();
     
     drawGround();
@@ -51,10 +57,10 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
     updateLocationOfEnemies(enemies);
     drawEnemies(enemies);
     
-    
     // Update values of dino
     dino->p = dino->np;
     dino->v = dino->nv;
+    
     drawDino(dino);
     drawScore();
 }
@@ -81,7 +87,7 @@ void drawGround()
 {
     short source = BACKGROUND_COLOR;
     DMA[3].src = &source;
-    DMA[3].dst = &videoBuffer[(OFFSET(GROUND + DINO_HEIGHT, 0, SCREEN_WIDTH))];
+    DMA[3].dst = &videoBuffer[(OFFSET(GROUND, 0, SCREEN_WIDTH))];
     DMA[3].cnt = SCREEN_WIDTH | DMA_SOURCE_FIXED | DMA_ON;
 }
 
@@ -125,9 +131,11 @@ void clearOldEnemies(Enemy *enemies)
     }
 }
 
-bool didLose(Dino *dino)
+bool didLose(Dino *dino, Enemy *enemies)
 {
     UNUSED(dino);
-    return true;
+    UNUSED(enemies);
+    // Iterate through all enemies, calculating if the dino is colliding with any of them
+    return false;
 }
 

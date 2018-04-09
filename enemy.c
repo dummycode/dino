@@ -6,14 +6,14 @@
 #include <stdbool.h>
 
 #define GROUND 75
-#define MAX_HEIGHT 50
+#define MIN_HEIGHT 0
 
 void drawEnemy(Enemy *enemy) 
 {
-    if (enemy->p.y < 0 || enemy->p.x < 0 || enemy->p.y + enemy->size.width > SCREEN_WIDTH - 1 || enemy->p.x + enemy->size.height > SCREEN_HEIGHT - 1) {
-        drawImageSketchy(GROUND - enemy->p.y, enemy->p.x, enemy->size.height, enemy->size.width, enemy->image);
-    }
-    drawImage(GROUND - enemy->p.y, enemy->p.x, enemy->size.height, enemy->size.width, enemy->image);
+//    if (enemy->p.y < 0 || enemy->p.x < 0 || enemy->p.y + enemy->size.width > SCREEN_WIDTH - 1 || enemy->p.x + enemy->size.height > SCREEN_HEIGHT - 1) {
+//        drawImageSketchy(enemy->p.y, enemy->p.x, enemy->size.height, enemy->size.width, enemy->image);
+//    }
+    drawImage(enemy->p.y, enemy->p.x, enemy->size.height, enemy->size.width, enemy->image);
 }
 
 void updateEnemy(Enemy *enemy) 
@@ -22,24 +22,19 @@ void updateEnemy(Enemy *enemy)
     enemy->np.y = enemy->p.y + enemy->v.y;
     
     if (enemy->np.x < 0) {
-        enemy->alive = false;
+        //enemy->alive = false;
     } 
     
-    if (enemy->np.y < GROUND - MAX_HEIGHT) {
-        enemy->np.y = GROUND - MAX_HEIGHT;
+    if (enemy->np.y + enemy->size.height > GROUND || enemy->np.y < MIN_HEIGHT) {
+        enemy->np.y = GROUND + MIN_HEIGHT / 2;
     }
     
     enemy->nv.x = enemy->v.x;
     enemy->nv.y = enemy->v.y;
-    
-    if (enemy->np.y < 0) {
-        enemy->np.y = 0;
-        enemy->nv.y = 0;
-    }
 }
 
 void clearOldEnemy(Enemy *enemy)
 {
-    drawRectangle(GROUND - enemy->p.y, enemy->p.x, enemy->size.height, enemy->size.width, BACKGROUND_COLOR);
+    drawRectangle(enemy->p.y, enemy->p.x, enemy->size.height, enemy->size.width, BACKGROUND_COLOR);
 }
 

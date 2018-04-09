@@ -32,7 +32,7 @@ int main(void)
     
     Dino dino = (Dino) {
         STATE_STILL,
-        (Point) {0, 0}, // Current location
+        (Point) {0, 75}, // Current location
         (Point) {0, 0}, // New location
         (Vector) {0, 0}, // Current velocity
         (Vector) {0, 0}, // New velocity
@@ -44,11 +44,11 @@ int main(void)
     
     enemies[0] = (Enemy) {
         true,
-        (Point) {240, 20},
+        (Point) {240, 65},
         (Point) {0, 0},
-        (Vector) {-1, 0},
+        (Vector) {-4, 0},
         (Vector) {0, 0},
-        (Size) {25, 25},
+        (Size) {15, 15},
         bird,
     };
 

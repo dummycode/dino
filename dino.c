@@ -8,8 +8,8 @@
 
 #include <stdbool.h>
 
-#define STEP 3
-#define GROUND 75
+#define STEP 5
+#define GROUND 100
 
 void updateDinoState(Dino *dino)
 {   
@@ -43,13 +43,13 @@ void drawDino(Dino *dino)
 {
     switch (dino->state) {
         case STATE_STILL:
-            drawImage(GROUND - dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_still);
+            drawImage(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_still);
             break;
         case STATE_RIGHT:
-            drawImage(GROUND - dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_right);
+            drawImage(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_right);
             break;
         case STATE_LEFT:
-            drawImage(GROUND - dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_left);
+            drawImage(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_left);
             break;
     } 
 }
@@ -58,18 +58,22 @@ void updateDino(Dino *dino)
 {
     // Every 4 ticks, update time in air
     dino->timeInAir += 1;
-    int mult = dino->timeInAir / 5;
+    int mult = dino->timeInAir / 15;
+
+    dino->np.x = dino->p.x + dino->v.x;
     dino->np.y = dino->p.y + dino->v.y;
-    dino->nv.y = dino->v.y - mult;
     
-    if (dino->np.y < 0) {
-        dino->np.y = 0;
+    dino->nv.y = dino->v.y + mult;
+    
+    if (dino->np.y > GROUND - DINO_HEIGHT) {
+        dino->np.y = GROUND - DINO_HEIGHT;
         dino->nv.y = 0;
+        dino->state = STATE_RIGHT;
     }
 }
 
 void clearOldDino(Dino *dino)
 {
-    drawRectangle(GROUND - dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, BACKGROUND_COLOR);
+    drawRectangle(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, BACKGROUND_COLOR);
 }
 
