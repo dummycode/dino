@@ -42,8 +42,8 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
     updateEnemies(enemies);
     
     if (didLose(dino, enemies)) {
-        // Update high score
-        // Return to main menu
+        // TODO: Update high score
+        clearScreen();
         *state = MENU;
     }
     
@@ -91,13 +91,6 @@ void drawGround()
     DMA[3].cnt = SCREEN_WIDTH | DMA_SOURCE_FIXED | DMA_ON;
 }
 
-void resetGame()
-{
-    jumped = false;
-    step = 100;
-    score = 0;
-}
-
 void updateLocationOfEnemies(Enemy *enemies)
 {
     for (int i = 0; i < MAX_ENEMIES; i++) {
@@ -143,9 +136,42 @@ bool didLose(Dino *dino, Enemy *enemies)
     for (int i = 0; i < MAX_ENEMIES; i++) {
         Enemy enemy = enemies[i];
         if (enemy.alive) {
-            // Check if each corner is colliding, if so return true
+            // If left corner is in
+            int x = dino->p.x;
+            int y = dino->p.y;
+            if (x > enemy.p.x && (x < enemy.p.x + (int) enemy.size.width) && y > enemy.p.y && (y < enemy.p.y + (int) enemy.size.height)) {
+                return true;
+            }
+            // Bottom left
+            x = dino->p.x;
+            y = dino->p.y + DINO_HEIGHT;
+            if (x > enemy.p.x && (x < enemy.p.x + (int) enemy.size.width) && y > enemy.p.y && (y < enemy.p.y + (int) enemy.size.height)) {
+                return true;
+            }
+            // Bottom right
+            x = dino->p.x + DINO_WIDTH;
+            y = dino->p.y + DINO_HEIGHT;
+            if (x > enemy.p.x && (x < enemy.p.x + (int) enemy.size.width) && y > enemy.p.y && (y < enemy.p.y + (int) enemy.size.height)) {
+                return true;
+            }
+            // Top right
+            x = dino->p.x + DINO_WIDTH;
+            y = dino->p.y;
+            if (x > enemy.p.x && (x < enemy.p.x + (int) enemy.size.width) && y > enemy.p.y && (y < enemy.p.y + (int) enemy.size.height)) {
+                return true;
+            }
         }
     }
     return false;
+}
+
+/**
+ * Reset the game to new
+ */
+void resetGame()
+{
+    jumped = false;
+    step = 100;
+    score = 0;
 }
 

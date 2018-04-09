@@ -22,7 +22,7 @@ void updateEnemy(Enemy *enemy)
     enemy->np.y = enemy->p.y + enemy->v.y;
     
     if (enemy->np.x < 0) {
-        //enemy->alive = false;
+        enemy->alive = false;
     } 
     
     if (enemy->np.y + enemy->size.height > GROUND || enemy->np.y < MIN_HEIGHT) {

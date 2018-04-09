@@ -71,6 +71,27 @@ int main(void)
                     if (KEY_DOWN_NOW(BUTTON_START)) {
                         // Reset game state
                         resetGame();
+                            
+                        dino = (Dino) {
+                            STATE_STILL,
+                            (Point) {0, 75}, // Current location
+                            (Point) {0, 0}, // New location
+                            (Vector) {0, 0}, // Current velocity
+                            (Vector) {0, 0}, // New velocity
+                            (Feet) {0, 0},
+                            0,
+                        };
+                        
+                        enemies[0] = (Enemy) {
+                            true,
+                            (Point) {240, 65},
+                            (Point) {0, 0},
+                            (Vector) {-4, 0},
+                            (Vector) {0, 0},
+                            (Size) {15, 15},
+                            bird,
+                        };
+                        
                         // Clear screen
                         clearScreen();
                         state = PLAYING;
