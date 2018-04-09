@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 #define GROUND 100
-#define MIN_Y 40
+#define MIN_Y 50
 
 void drawEnemy(Enemy *enemy) 
 {

@@ -14,7 +14,7 @@
 #include <stdio.h>
 
 // Vars
-volatile unsigned short counter;
+volatile unsigned int counter;
 
 unsigned int highScore = 0;
 
@@ -42,18 +42,6 @@ int main(void)
     };
     
     Enemy enemies[2];
-    
-    enemies[0] = (Enemy) {
-        true,
-        (Point) {240, 65},
-        (Point) {0, 0},
-        (Vector) {-4, 0},
-        (Vector) {0, 0},
-        (Size) {15, 15},
-        bird,
-    };
-    
-    num_enemies += 1;
 
     while (1) {
         if (counter == SHRT_MAX) {
@@ -73,7 +61,7 @@ int main(void)
                 if (!startPressed) {
                     if (KEY_DOWN_NOW(BUTTON_START)) {
                         // Reset game state
-                        resetGame();
+                        resetGame(enemies);
                             
                         dino = (Dino) {
                             STATE_STILL,
@@ -83,16 +71,6 @@ int main(void)
                             (Vector) {0, 0}, // New velocity
                             (Feet) {0, 0},
                             0,
-                        };
-                        
-                        enemies[0] = (Enemy) {
-                            true,
-                            (Point) {240, 65},
-                            (Point) {0, 0},
-                            (Vector) {-4, 0},
-                            (Vector) {0, 0},
-                            (Size) {15, 15},
-                            bird,
                         };
                         
                         // Clear screen

@@ -13,9 +13,9 @@
 #include <stdbool.h>
 
 #define GROUND 100
-#define MAX_ENEMIES 2
+#define MAX_ENEMIES 4
 #define UNUSED(x) (void) x
-#define MIN_Y 40
+#define MIN_Y 50
 #define SCORE_DIVIDER 100
 
 bool jumped = false;
@@ -72,10 +72,6 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
         }
         clearScreen();
         
-        for (int i = 0; i < MAX_ENEMIES; i++) {
-            enemies[i].alive = false;
-        }
-        
         // Draw dialog box
         drawRectangle(24, 27, 186, 106, BLACK);
         drawRectangle(27, 30, 180, 100, TEXT_COLOR);
@@ -84,9 +80,8 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
         
     if (num_enemies < MAX_ENEMIES) {
         // Decide if we should place another enemy
-        srand(counter);
-        int p = rand() % (100 + 1 - 0) + 0;
-        if (p < 30) {         
+        int p = rand() % (1000 + 1 - 0) + 0;
+        if (p < 10) {         
             //rand() % (max + 1 - min) + min;
             int yStart = rand() % (65 + 1 - MIN_Y) + MIN_Y;
             int xVelocity = rand() % (-3 + 1 - (-3)) + (-3);
@@ -98,7 +93,7 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
             }
             enemies[i] = (Enemy) {
                 true,
-                (Point) {240, yStart},
+                (Point) {225, yStart},
                 (Point) {0, 0},
                 (Vector) {xVelocity, yVelocity},
                 (Vector) {0, 0},
@@ -112,6 +107,9 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
 
 void drawScore()
 {
+    if (counter % 1000 == 0) {
+        score = 0;
+    }
     score += 1 * mult;
     
     if (score % 25 == 0) {
@@ -206,8 +204,12 @@ bool didLose(Dino *dino, Enemy *enemies)
 /**
  * Reset the game to new
  */
-void resetGame()
+void resetGame(Enemy enemies[])
 {
+    for (int i = 0; i < MAX_ENEMIES; i++) {
+        enemies[i].alive = false;
+    }
+    num_enemies = 0;
     jumped = false;
     mult = 0;
     score = 0;

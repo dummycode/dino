@@ -15,7 +15,7 @@ bool didLose(Dino *dino, Enemy *enemies);
 void updateLocationOfEnemies(Enemy *enemies);
 void clearOldEnemies(Enemy *enemies);
 
-extern volatile unsigned short counter;
+extern volatile unsigned int counter;
 
 #endif
 
