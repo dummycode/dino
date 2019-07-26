@@ -19,19 +19,19 @@ volatile unsigned int counter;
 
 unsigned int highScore = 0;
 
-int main(void) 
+int main(void)
 {
     REG_DISPCNT = MODE3 | BG2_ENABLE;
-    
+
     counter = 0;
-    
+
     drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
-    
+
     GameState state = LAUNCH;
-    
+
     bool selectPressed = false;
     bool startPressed = false;
-    
+
     Dino dino = (Dino) {
         STATE_STILL,
         (Point) {0, 75}, // Current location
@@ -41,38 +41,38 @@ int main(void)
         (Feet) {0, 0},
         0,
     };
-    
+
     Enemy enemies[2];
 
     while (1) {
         counter += 1;
-        
+
         char buffer[1024];
         drawString(0, 0, buffer, TEXT_COLOR, BACKGROUND_COLOR);
-      
+
         switch (state) {
             case LAUNCH:
                 drawLaunch();
-                
+
                 if (!startPressed) {
                     if (KEY_DOWN_NOW(BUTTON_START)) {
                         startPressed = true;
                         // Clear screen
                         clearScreen();
                         state = MENU;
-                    }   
+                    }
                 }
-                startPressed = KEY_DOWN_NOW(BUTTON_START); 
-                break;  
-                
+                startPressed = KEY_DOWN_NOW(BUTTON_START);
+                break;
+
             case MENU:
                 drawMenu();
-                
+
                 if (!startPressed) {
                     if (KEY_DOWN_NOW(BUTTON_START)) {
                         // Reset game state
                         resetGame(enemies);
-                            
+
                         dino = (Dino) {
                             STATE_STILL,
                             (Point) {0, 75}, // Current location
@@ -82,14 +82,14 @@ int main(void)
                             (Feet) {0, 0},
                             0,
                         };
-                        
+
                         // Clear screen
                         clearScreen();
                         state = PLAYING;
                     }
                 }
                 startPressed = KEY_DOWN_NOW(BUTTON_START);
-                
+
                 if (!selectPressed) {
                     if (KEY_DOWN_NOW(BUTTON_SELECT)) {
                         selectPressed = true;
@@ -97,62 +97,62 @@ int main(void)
                         drawRectangle(24, 27, 186, 106, BLACK);
                         drawRectangle(27, 30, 180, 100, TEXT_COLOR);
                         state = RULES;
-                    }   
+                    }
                 }
                 selectPressed = KEY_DOWN_NOW(BUTTON_SELECT);
                 break;
-                
+
             case PLAYING:
                 drawGame(&dino, enemies, &selectPressed, &state);
                 break;
-                
+
             case PAUSED:
                 drawPauseMenu();
-                
+
                 if (KEY_DOWN_NOW(BUTTON_START)) {
                     // Clear screen
                     drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
                     state = PLAYING;
                 }
-                
+
                 if (!selectPressed) {
                     if (KEY_DOWN_NOW(BUTTON_SELECT)) {
                         selectPressed = true;
                         // Clear screen
                         clearScreen();
                         state = MENU;
-                    }   
+                    }
                 }
                 selectPressed = KEY_DOWN_NOW(BUTTON_SELECT);
                 break;
-                
+
             case LOST:
                 drawLost();
-                
+
                 if (!startPressed) {
                     if (KEY_DOWN_NOW(BUTTON_START)) {
                         startPressed = true;
                         // Clear screen
                         clearScreen();
                         state = MENU;
-                    }   
+                    }
                 }
-                startPressed = KEY_DOWN_NOW(BUTTON_START); 
+                startPressed = KEY_DOWN_NOW(BUTTON_START);
                 break;
-                
+
             case RULES:
                 drawRules();
-                
+
                 if (!startPressed) {
                     if (KEY_DOWN_NOW(BUTTON_START)) {
                         startPressed = true;
                         // Clear screen
                         clearScreen();
                         state = MENU;
-                    }   
+                    }
                 }
-                startPressed = KEY_DOWN_NOW(BUTTON_START); 
-                break;  
+                startPressed = KEY_DOWN_NOW(BUTTON_START);
+                break;
         }
     }
     return 0;
@@ -161,7 +161,7 @@ int main(void)
 /**
  * Logic to draw the main menu
  */
-void drawMenu() 
+void drawMenu()
 {
     waitForVblank();
     drawImage(10, 65, 110, 58, title);
@@ -186,7 +186,7 @@ void drawPauseMenu()
  */
 void drawRules()
 {
-    waitForVblank(); 
+    waitForVblank();
     drawString(29, 32, "Rules", WHITE, TEXT_COLOR);
     drawString(41, 32, "Press \"Up\" to jump", WHITE, TEXT_COLOR);
     drawString(51, 32, "Avoid the enemies", WHITE, TEXT_COLOR);
@@ -200,10 +200,10 @@ void drawRules()
  */
 void drawLost()
 {
-    waitForVblank(); 
+    waitForVblank();
     drawString(29, 32, "You lost :(", WHITE, TEXT_COLOR);
     char buffer[1024];
-    sprintf(buffer, "Your score: %u", score); 
+    sprintf(buffer, "Your score: %u", score);
     drawString(41, 32, buffer, WHITE, TEXT_COLOR);
     drawString(117, 32, "Start to close", WHITE, TEXT_COLOR);
 }

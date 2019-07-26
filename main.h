@@ -21,4 +21,3 @@ extern volatile int num_enemies;
 extern volatile unsigned int score;
 
 #endif
-

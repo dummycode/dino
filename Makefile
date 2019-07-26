@@ -4,9 +4,6 @@
 # ***** Henry Harris *****
 ################################################################################
 
-# The name of your desired GBA game
-# This should be a just a name i.e MyFirstGBAGame
-# No SPACES AFTER THE NAME.
 PROGNAME = Dino
 
 IMAGES = $(wildcard img/*.c)

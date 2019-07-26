@@ -40,4 +40,3 @@ void clearOldDino(Dino *dino);
 extern volatile unsigned short *pcounter;
 
 #endif
-

@@ -3,4 +3,3 @@ My ~~worse~~ version of Google Chrome's offline dinosaur game – programmed in 
 
 #### Controls
 Press "up" to jump
-

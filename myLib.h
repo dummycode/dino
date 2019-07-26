@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////
 //
 //  INDEX
-// 
+//
 //////////////////////////////////////////////////////////////////////
-/* 
+/*
         General
         Bitmaps
         Video
@@ -94,33 +94,33 @@ extern screenblock *screenbase;
 
 //interrupt constants for turning them on
 
-#define VBOCCUR  (1<<0)  // VB – vertical blank is occurring
-#define HBOCCUR  (1<<1)  // HB – horizontal blank is occurring
-#define VCREACH  (1<<2)  // VC – vertical count reached
-#define VBENABLE (1<<3)  //	VBE – enables vblank interrupt
-#define HBENABLE (1<<4)  // HBE – enables hblank interrupt
-#define VCENABLE (1<<5)  //	VCE – enables vcount interrupt
-// Note: Bits 6-15			VCOUNT – vertical count value (0-159)
+#define VBOCCUR  (1<<0)  // VB ï¿½ vertical blank is occurring
+#define HBOCCUR  (1<<1)  // HB ï¿½ horizontal blank is occurring
+#define VCREACH  (1<<2)  // VC ï¿½ vertical count reached
+#define VBENABLE (1<<3)  //	VBE ï¿½ enables vblank interrupt
+#define HBENABLE (1<<4)  // HBE ï¿½ enables hblank interrupt
+#define VCENABLE (1<<5)  //	VCE ï¿½ enables vcount interrupt
+// Note: Bits 6-15			VCOUNT ï¿½ vertical count value (0-159)
 
 
 
 
 
 // Interrupt constants for checking which type of interrupt happened
-#define INT_VB     (1 <<  0)	// VB – vertical blank interrupt
-#define INT_HB     (1 <<  1)    // HB – horizontal blank interrupt
-#define INT_VC     (1 <<  2)	// VC – vertical scanline count interrupt
-#define INT_T0     (1 <<  3)	// T0 – timer 0 interrupt
-#define INT_T1     (1 <<  4)	// T1 – timer 1 interrupt
-#define INT_T2     (1 <<  5)	// T2 – timer 2 interrupt
-#define INT_T3     (1 <<  6)	// T3 – timer 3 interrupt
-#define INT_COM    (1 <<  7)	// COM – serial communication interrupt
-#define INT_DMA0   (1 <<  8)	// DMA0 – DMA0 finished interrupt
-#define INT_DMA1   (1 <<  9)	// DMA1 – DMA1 finished interrupt
-#define INT_DMA2   (1 << 10) 	// DMA2 – DMA2 finished interrupt
-#define INT_DMA3   (1 << 11)	// DMA3 – DMA3 finished interrupt
-#define INT_BUTTON (1 << 12) 	// BUTTON – button interrupt
-#define INT_CART   (1 << 13)	// CART – game cartridge interrupt
+#define INT_VB     (1 <<  0)	// VB ï¿½ vertical blank interrupt
+#define INT_HB     (1 <<  1)    // HB ï¿½ horizontal blank interrupt
+#define INT_VC     (1 <<  2)	// VC ï¿½ vertical scanline count interrupt
+#define INT_T0     (1 <<  3)	// T0 ï¿½ timer 0 interrupt
+#define INT_T1     (1 <<  4)	// T1 ï¿½ timer 1 interrupt
+#define INT_T2     (1 <<  5)	// T2 ï¿½ timer 2 interrupt
+#define INT_T3     (1 <<  6)	// T3 ï¿½ timer 3 interrupt
+#define INT_COM    (1 <<  7)	// COM ï¿½ serial communication interrupt
+#define INT_DMA0   (1 <<  8)	// DMA0 ï¿½ DMA0 finished interrupt
+#define INT_DMA1   (1 <<  9)	// DMA1 ï¿½ DMA1 finished interrupt
+#define INT_DMA2   (1 << 10) 	// DMA2 ï¿½ DMA2 finished interrupt
+#define INT_DMA3   (1 << 11)	// DMA3 ï¿½ DMA3 finished interrupt
+#define INT_BUTTON (1 << 12) 	// BUTTON ï¿½ button interrupt
+#define INT_CART   (1 << 13)	// CART ï¿½ game cartridge interrupt
 
 
 /* DMA */

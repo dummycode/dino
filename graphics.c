@@ -23,7 +23,7 @@ void drawImage(int row, int col, int width, int height, const unsigned short* im
     }
 }
 
-void drawImageSketchy(int row, int col, int width, int height, const unsigned short* image) 
+void drawImageSketchy(int row, int col, int width, int height, const unsigned short* image)
 {
     for (int r = row; r < height; r++) {
         for (int c = col; c < width; c++) {
@@ -35,7 +35,7 @@ void drawImageSketchy(int row, int col, int width, int height, const unsigned sh
     }
 }
 
-void setPixel(int row, int col, unsigned short color) 
+void setPixel(int row, int col, unsigned short color)
 {
     videoBuffer[OFFSET(row, col, SCREEN_WIDTH)] = color;
 }

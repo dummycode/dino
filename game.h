@@ -18,4 +18,3 @@ void clearOldEnemies(Enemy *enemies);
 extern volatile unsigned int counter;
 
 #endif
-

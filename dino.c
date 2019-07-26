@@ -12,7 +12,7 @@
 #define GROUND 100
 
 void updateDinoState(Dino *dino)
-{   
+{
     switch (dino->state) {
         case STATE_STILL:
             if (dino->p.y == 0 && dino->v.y == 0) {
@@ -36,10 +36,10 @@ void updateDinoState(Dino *dino)
                 dino->state = STATE_RIGHT;
             }
             break;
-    }     
+    }
 }
 
-void drawDino(Dino *dino) 
+void drawDino(Dino *dino)
 {
     switch (dino->state) {
         case STATE_STILL:
@@ -51,10 +51,10 @@ void drawDino(Dino *dino)
         case STATE_LEFT:
             drawImage(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_left);
             break;
-    } 
+    }
 }
 
-void updateDino(Dino *dino) 
+void updateDino(Dino *dino)
 {
     // Every 4 ticks, update time in air
     dino->timeInAir += 1;
@@ -62,9 +62,9 @@ void updateDino(Dino *dino)
 
     dino->np.x = dino->p.x + dino->v.x;
     dino->np.y = dino->p.y + dino->v.y;
-    
+
     dino->nv.y = dino->v.y + mult;
-    
+
     if (dino->np.y > GROUND - DINO_HEIGHT) {
         dino->np.y = GROUND - DINO_HEIGHT;
         dino->nv.y = 0;
@@ -76,4 +76,3 @@ void clearOldDino(Dino *dino)
 {
     drawRectangle(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, BACKGROUND_COLOR);
 }
-

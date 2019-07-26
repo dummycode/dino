@@ -28,4 +28,3 @@ extern volatile unsigned short *pcounter;
 extern volatile int num_enemies;
 
 #endif
-

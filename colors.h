@@ -19,4 +19,3 @@
 #define GRAY    COLOR(25, 25, 25)
 
 #endif
-

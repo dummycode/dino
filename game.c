@@ -24,7 +24,7 @@ volatile unsigned int score;
 volatile int num_enemies = 0;
 
 void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state)
-{   
+{
     if (KEY_DOWN_NOW(BUTTON_SELECT)) {
         *selectPressed = true;
         *state = PAUSED;
@@ -42,27 +42,27 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
 
     updateDino(dino);
     updateDinoState(dino);
-    
+
     updateEnemies(enemies);
-    
+
     waitForVblank();
-    
+
     drawGround();
     clearOldDino(dino);
     clearOldEnemies(enemies);
-    
+
     // Update values of enemies
     updateLocationOfEnemies(enemies);
     drawEnemies(enemies);
-    
+
     // Update values of dino
     dino->p = dino->np;
     dino->v = dino->nv;
-    
+
     drawDino(dino);
     drawScore();
-    
-        
+
+
     if (didLose(dino, enemies)) {
         // Update high score
         score = score / SCORE_DIVIDER;
@@ -71,17 +71,17 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
             highScore = score;
         }
         clearScreen();
-        
+
         // Draw dialog box
         drawRectangle(24, 27, 186, 106, BLACK);
         drawRectangle(27, 30, 180, 100, TEXT_COLOR);
         *state = LOST;
     }
-        
+
     if (num_enemies < MAX_ENEMIES) {
         // Decide if we should place another enemy
         int p = rand() % (1000 + 1 - 0) + 0;
-        if (p < 10) {         
+        if (p < 10) {
             //rand() % (max + 1 - min) + min;
             int yStart = rand() % (65 + 1 - MIN_Y) + MIN_Y;
             int xVelocity = rand() % (-3 + 1 - (-3)) + (-3);
@@ -108,11 +108,11 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
 void drawScore()
 {
     score += 1 * mult;
-    
+
     if (score % 25 == 0) {
         mult += 1;
     }
-    
+
     char buffer[1024];
     sprintf(buffer, "Score: %d", score / SCORE_DIVIDER);
     drawString(4, 170, buffer, TEXT_COLOR, BACKGROUND_COLOR);
@@ -211,4 +211,3 @@ void resetGame(Enemy enemies[])
     mult = 0;
     score = 0;
 }
-

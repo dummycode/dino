@@ -20,4 +20,3 @@ void drawString(int row, int col, char str[], unsigned short color, unsigned sho
 		drawChar(row, col + i * 6, str[i], color, background);
 	}
 }
-
