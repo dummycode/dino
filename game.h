@@ -1,9 +1,13 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <stdbool.h>
+
 #include "enemy.h"
 
-#include <stdbool.h>
+#typedef struct {
+  // Holds the current app state
+} AppState;
 
 void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state);
 void drawScore();
