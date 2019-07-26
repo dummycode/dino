@@ -3,7 +3,14 @@
 #include "colors.h"
 #include "text.h"
 
-volatile unsigned short *videoBuffer = (unsigned short *)0x6000000;
+volatile unsigned short *videoBuffer = (unsigned short *) 0x6000000;
+
+void waitForVblank()
+{
+    while (*SCANLINECOUNTER > 160);
+    while (*SCANLINECOUNTER < 160);
+    vBlankCounter++;
+}
 
 void drawRectangle(int row, int col, int width, int height, unsigned int color)
 {
@@ -23,15 +30,14 @@ void drawImage(int row, int col, int width, int height, const unsigned short* im
     }
 }
 
+void drawFullScreenImage(const unsigned short* image)
+{
+  DMA[3].src = image;
+  DMA[3].dst = videoBuffer;
+  DMA[3].cnt = SCREEN_WIDTH * SCREEN_HEIGHT | DMA_ON;
+}
+
 void setPixel(int row, int col, unsigned short color)
 {
     videoBuffer[OFFSET(row, col, SCREEN_WIDTH)] = color;
-}
-
-void waitForVblank()
-{
-    while (*SCANLINECOUNTER > 160)
-        ;
-    while (*SCANLINECOUNTER < 160)
-        ;
 }
