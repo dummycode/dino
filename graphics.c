@@ -23,18 +23,6 @@ void drawImage(int row, int col, int width, int height, const unsigned short* im
     }
 }
 
-void drawImageSketchy(int row, int col, int width, int height, const unsigned short* image)
-{
-    for (int r = row; r < height; r++) {
-        for (int c = col; c < width; c++) {
-            if (r > 0 && c > 0 && r < SCREEN_HEIGHT - 1 && c < SCREEN_WIDTH - 1) {
-                drawString(0, 0, "test test", TEXT_COLOR, BACKGROUND_COLOR);
-                setPixel(r, c, image[OFFSET(r, 0, width)]);
-            }
-        }
-    }
-}
-
 void setPixel(int row, int col, unsigned short color)
 {
     videoBuffer[OFFSET(row, col, SCREEN_WIDTH)] = color;

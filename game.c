@@ -14,7 +14,6 @@
 
 #define GROUND 100
 #define MAX_ENEMIES 4
-#define UNUSED(x) (void) x
 #define MIN_Y 50
 #define SCORE_DIVIDER 100
 
@@ -82,7 +81,6 @@ void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state
         // Decide if we should place another enemy
         int p = rand() % (1000 + 1 - 0) + 0;
         if (p < 10) {
-            //rand() % (max + 1 - min) + min;
             int yStart = rand() % (65 + 1 - MIN_Y) + MIN_Y;
             int xVelocity = rand() % (-3 + 1 - (-3)) + (-3);
             int yVelocity = rand() % (2 + 1 - (-2)) + (-2);
