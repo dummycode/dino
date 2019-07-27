@@ -3,7 +3,10 @@
 
 typedef enum {
     LAUNCH,
+    LAUNCH_DRAW,
+    MENU_DRAW,
     MENU,
+    APP_INIT,
     PLAYING,
     PAUSED,
     RULES,
@@ -19,5 +22,7 @@ void drawLaunch();
 
 extern volatile int num_enemies;
 extern volatile unsigned int score;
+
+typedef unsigned int uint_t;
 
 #endif

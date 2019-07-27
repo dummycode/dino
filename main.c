@@ -25,12 +25,10 @@ int main(void)
 
     counter = 0;
 
-    drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
+    GameState state = LAUNCH_DRAW;
 
-    GameState state = LAUNCH;
-
-    bool selectPressed = false;
-    bool startPressed = false;
+    uint_t previousButtons = BUTTONS;
+    uint_t currentButtons = BUTTONS;
 
     Dino dino = (Dino) {
         STATE_STILL,
@@ -45,115 +43,98 @@ int main(void)
     Enemy enemies[2];
 
     while (1) {
+      currentButtons = BUTTONS;
         counter += 1;
 
-        char buffer[1024];
-        drawString(0, 0, buffer, TEXT_COLOR, BACKGROUND_COLOR);
-
         switch (state) {
-            case LAUNCH:
+            case LAUNCH_DRAW:
+                waitForVblank();
                 drawLaunch();
-
-                if (!startPressed) {
-                    if (KEY_DOWN_NOW(BUTTON_START)) {
-                        startPressed = true;
-                        // Clear screen
-                        clearScreen();
-                        state = MENU;
-                    }
-                }
-                startPressed = KEY_DOWN_NOW(BUTTON_START);
+                state = LAUNCH;
                 break;
 
+            case LAUNCH:
+              if (KEY_JUST_PRESSED(BUTTON_START, previousButtons, currentButtons)) {
+                  clearScreen();
+                  state = MENU_DRAW;
+              }
+              break;
+
+            case MENU_DRAW:
+              waitForVblank();
+              drawMenu();
+              state = MENU;
+              break;
             case MENU:
-                drawMenu();
-
-                if (!startPressed) {
-                    if (KEY_DOWN_NOW(BUTTON_START)) {
-                        // Reset game state
-                        resetGame(enemies);
-
-                        dino = (Dino) {
-                            STATE_STILL,
-                            (Point) {0, 75}, // Current location
-                            (Point) {0, 0}, // New location
-                            (Vector) {0, 0}, // Current velocity
-                            (Vector) {0, 0}, // New velocity
-                            (Feet) {0, 0},
-                            0,
-                        };
-
-                        // Clear screen
-                        clearScreen();
-                        state = PLAYING;
-                    }
+                if (KEY_JUST_PRESSED(BUTTON_SELECT, previousButtons, currentButtons)) {
+                  // Clear screen
+                  drawRectangle(24, 27, 186, 106, BLACK);
+                  drawRectangle(27, 30, 180, 100, TEXT_COLOR);
+                  state = RULES;
                 }
-                startPressed = KEY_DOWN_NOW(BUTTON_START);
+                else if (KEY_JUST_PRESSED(BUTTON_START, previousButtons, currentButtons)) {
+                  // Reset game state
+                  resetGame(enemies);
 
-                if (!selectPressed) {
-                    if (KEY_DOWN_NOW(BUTTON_SELECT)) {
-                        selectPressed = true;
-                        // Clear screen
-                        drawRectangle(24, 27, 186, 106, BLACK);
-                        drawRectangle(27, 30, 180, 100, TEXT_COLOR);
-                        state = RULES;
-                    }
+                  dino = (Dino) {
+                      STATE_STILL,
+                      (Point) {0, 75}, // Current location
+                      (Point) {0, 0}, // New location
+                      (Vector) {0, 0}, // Current velocity
+                      (Vector) {0, 0}, // New velocity
+                      (Feet) {0, 0},
+                      0,
+                  };
+
+                  // Clear screen
+                  clearScreen();
+                  state = PLAYING;
                 }
-                selectPressed = KEY_DOWN_NOW(BUTTON_SELECT);
                 break;
 
             case PLAYING:
-                drawGame(&dino, enemies, &selectPressed, &state);
+                drawGame(&dino, enemies, previousButtons, currentButtons, &state);
                 break;
 
             case PAUSED:
                 drawPauseMenu();
 
-                if (KEY_DOWN_NOW(BUTTON_START)) {
+                if (KEY_JUST_PRESSED(BUTTON_START, previousButtons, currentButtons)) {
                     // Clear screen
                     drawRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, BACKGROUND_COLOR);
                     state = PLAYING;
                 }
 
-                if (!selectPressed) {
-                    if (KEY_DOWN_NOW(BUTTON_SELECT)) {
-                        selectPressed = true;
-                        // Clear screen
-                        clearScreen();
-                        state = MENU;
-                    }
+                if (KEY_JUST_PRESSED(BUTTON_SELECT, previousButtons, currentButtons)) {
+                    // Clear screen
+                    clearScreen();
+                    state = MENU_DRAW;
                 }
-                selectPressed = KEY_DOWN_NOW(BUTTON_SELECT);
                 break;
 
             case LOST:
                 drawLost();
 
-                if (!startPressed) {
-                    if (KEY_DOWN_NOW(BUTTON_START)) {
-                        startPressed = true;
-                        // Clear screen
-                        clearScreen();
-                        state = MENU;
-                    }
+                if (KEY_JUST_PRESSED(BUTTON_START, previousButtons, currentButtons)) {
+                    // Clear screen
+                    clearScreen();
+                    state = MENU_DRAW;
                 }
-                startPressed = KEY_DOWN_NOW(BUTTON_START);
                 break;
 
             case RULES:
                 drawRules();
 
-                if (!startPressed) {
-                    if (KEY_DOWN_NOW(BUTTON_START)) {
-                        startPressed = true;
-                        // Clear screen
-                        clearScreen();
-                        state = MENU;
-                    }
+                if (KEY_JUST_PRESSED(BUTTON_START, previousButtons, currentButtons)) {
+                    // Clear screen
+                    clearScreen();
+                    state = MENU_DRAW;
                 }
-                startPressed = KEY_DOWN_NOW(BUTTON_START);
                 break;
+            default:
+              break;
         }
+        previousButtons = currentButtons;
     }
     return 0;
 }
@@ -221,6 +202,5 @@ void clearScreen()
  */
 void drawLaunch()
 {
-    waitForVblank();
     drawImage(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, launch);
 }

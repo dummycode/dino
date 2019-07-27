@@ -22,10 +22,9 @@ int mult = 1;
 volatile unsigned int score;
 volatile int num_enemies = 0;
 
-void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state)
+void drawGame(Dino *dino, Enemy enemies[], uint_t previousButtons, uint_t currentButtons, GameState *state)
 {
-    if (KEY_DOWN_NOW(BUTTON_SELECT)) {
-        *selectPressed = true;
+    if (KEY_JUST_PRESSED(BUTTON_SELECT, previousButtons, currentButtons)) {
         *state = PAUSED;
     }
     if (!jumped) {
@@ -127,9 +126,10 @@ void drawGround()
 void updateLocationOfEnemies(Enemy *enemies)
 {
     for (int i = 0; i < MAX_ENEMIES; i++) {
-        if (enemies[i].alive)
+        if (enemies[i].alive) {
             enemies[i].p.x = enemies[i].np.x;
             enemies[i].p.y = enemies[i].np.y;
+        }
     }
 }
 

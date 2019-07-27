@@ -10,12 +10,12 @@
 // MACROS
 #define OFFSET(r, c, w) ((r) * (w) + (c))
 
-unsigned int vBlankCounter = 0;
+extern unsigned int vBlankCounter;
 
 // Prototypes
+void waitForVblank();
 void drawImage(int row, int col, int width, int height, const unsigned short* image);
 void drawRectangle(int row, int col, int width, int height, unsigned int color);
 void setPixel(int row, int col, unsigned short color);
-void waitForVblank();
 
 #endif

@@ -5,11 +5,12 @@
 
 #include "enemy.h"
 
-#typedef struct {
+typedef struct {
   // Holds the current app state
+  Dino dino;
 } AppState;
 
-void drawGame(Dino *dino, Enemy enemies[], bool *selectPressed, GameState *state);
+void drawGame(Dino *dino, Enemy enemies[], uint_t previousButtons, uint_t currentButtons, GameState *state);
 void drawScore();
 void drawGround();
 void resetGame();

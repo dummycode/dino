@@ -4,6 +4,7 @@
 #include "text.h"
 
 volatile unsigned short *videoBuffer = (unsigned short *) 0x6000000;
+unsigned int vBlankCounter = 0;
 
 void waitForVblank()
 {

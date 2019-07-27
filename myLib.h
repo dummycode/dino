@@ -185,7 +185,6 @@ typedef struct
 // *** Input =========================================================
 
 // Buttons
-
 #define BUTTON_A		(1<<0)
 #define BUTTON_B		(1<<1)
 #define BUTTON_SELECT	(1<<2)
@@ -200,7 +199,8 @@ typedef struct
 #define BUTTONS (*(volatile unsigned int *)0x4000130)
 
 #define KEY_DOWN_NOW(key)  (~(BUTTONS) & key)
-
+#define KEY_DOWN(key, buttons) (~(buttons) & (key))
+#define KEY_JUST_PRESSED(key, buttons, oldbuttons) (~KEY_DOWN(key, oldbuttons) & KEY_DOWN((key), (buttons)))
 
 #define BUTTON_INDEX_A      0
 #define BUTTON_INDEX_B      1
