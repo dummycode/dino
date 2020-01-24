@@ -39,21 +39,6 @@ void updateDinoState(Dino *dino)
     }
 }
 
-void drawDino(Dino *dino)
-{
-    switch (dino->state) {
-        case STATE_STILL:
-            drawImage(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_still);
-            break;
-        case STATE_RIGHT:
-            drawImage(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_right);
-            break;
-        case STATE_LEFT:
-            drawImage(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_left);
-            break;
-    }
-}
-
 void updateDino(Dino *dino)
 {
     // Every 4 ticks, update time in air

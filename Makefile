@@ -1,6 +1,4 @@
 ################################################################################
-# These are variables for the GBA toolchain build
-# You can add others if you wish to
 # ***** Henry Harris *****
 ################################################################################
 
@@ -12,7 +10,7 @@ IMAGES = $(wildcard img/*.c)
 # that will be compiled into your program. For example
 # if you have main.c and myLib.c then in the following
 # line you would put main.o and myLib.o
-OFILES = main.o game.o dino.o graphics.o text.o font.o enemy.o $(patsubst %.c, %.o, $(IMAGES))
+OFILES = main.o game.o dino.o graphics.o text.o font.o enemy.o draw.o $(patsubst %.c, %.o, $(IMAGES))
 
 ################################################################################
 # These are various settings used to make the GBA toolchain work
@@ -51,7 +49,7 @@ med : CFLAGS += $(CRELEASE) -I../shared
 med : LDFLAGS += $(LDRELEASE)
 med : $(PROGNAME).gba
 	@echo "[EXECUTE] Running emulator Mednafen"
-	@mednafen $(MEDOPT) $(PROGNAME).gba >emulator.log 2>&1
+	@mednafen $(MEDOPT) $(PROGNAME).gba 2>&1
 
 .PHONY : clean
 clean :

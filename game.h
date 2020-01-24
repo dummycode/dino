@@ -3,22 +3,32 @@
 
 #include <stdbool.h>
 
+#include "types.h"
 #include "enemy.h"
 
+
+#define NUM_ENEMIES 2
+
+// Holds the current app state
 typedef struct {
-  // Holds the current app state
   Dino dino;
+  Enemy enemies[NUM_ENEMIES];
+  uint_t score;
+  uint_t tick;
 } AppState;
 
-void drawGame(Dino *dino, Enemy enemies[], uint_t previousButtons, uint_t currentButtons, GameState *state);
-void drawScore();
-void drawGround();
+AppState initialAppState();
+void updateAppState(AppState *appState, uint_t previousButtons, uint_t currentButtons); 
+
+// void drawGame(Dino *dino, Enemy enemies[], uint_t previousButtons, uint_t currentButtons);
+// void drawScore();
+// void drawGround();
 void resetGame();
 void updateEnemies(Enemy *enemies);
-void drawEnemies(Enemy *enemies);
+// void drawEnemies(Enemy *enemies);
 bool didLose(Dino *dino, Enemy *enemies);
 void updateLocationOfEnemies(Enemy *enemies);
-void clearOldEnemies(Enemy *enemies);
+// void clearOldEnemies(Enemy *enemies);
 
 extern volatile unsigned int counter;
 

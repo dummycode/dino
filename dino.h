@@ -4,35 +4,34 @@
 #include <stdbool.h>
 
 typedef enum {
-	STATE_STILL,
-    STATE_RIGHT,
-    STATE_LEFT,
+  STATE_STILL,
+  STATE_RIGHT,
+  STATE_LEFT,
 } DinoState;
 
 typedef struct {
-    int x, y;
+  int x, y;
 } Point;
 
 typedef struct {
-    int x, y;
+  int x, y;
 } Vector;
 
 typedef struct {
-    unsigned int left, right;
+  unsigned int left, right;
 } Feet;
 
 typedef struct {
-    DinoState state;
-    Point p;
-    Point np;
-    Vector v;
-    Vector nv;
-    Feet feet;
-    int timeInAir;
+  DinoState state;
+  Point p;
+  Point np;
+  Vector v;
+  Vector nv;
+  Feet feet;
+  int timeInAir;
 } Dino;
 
 // Prototypes
-void drawDino(Dino *dino);
 void updateDinoState(Dino *dino);
 void updateDino(Dino *dino);
 void clearOldDino(Dino *dino);

@@ -1,14 +1,17 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include "types.h"
+#include "draw.h"
+
 typedef enum {
-    LAUNCH,
-    LAUNCH_DRAW,
     MENU_DRAW,
     MENU,
     APP_INIT,
     PLAYING,
+    DRAW_PAUSED,
     PAUSED,
+    DRAW_RULES,
     RULES,
     LOST,
 } GameState;
@@ -22,7 +25,5 @@ void drawLaunch();
 
 extern volatile int num_enemies;
 extern volatile unsigned int score;
-
-typedef unsigned int uint_t;
 
 #endif

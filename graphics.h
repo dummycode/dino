@@ -7,7 +7,7 @@
 #define DINO_HEIGHT 25
 #define DINO_WIDTH 25
 
-// MACROS
+// Macros
 #define OFFSET(r, c, w) ((r) * (w) + (c))
 
 extern unsigned int vBlankCounter;
@@ -15,7 +15,9 @@ extern unsigned int vBlankCounter;
 // Prototypes
 void waitForVblank();
 void drawImage(int row, int col, int width, int height, const unsigned short* image);
-void drawRectangle(int row, int col, int width, int height, unsigned int color);
+void drawRectangle(int row, int col, int width, int height, volatile unsigned int color);
+void drawFullScreenRectangle(volatile unsigned int color);
 void setPixel(int row, int col, unsigned short color);
 
 #endif
+
