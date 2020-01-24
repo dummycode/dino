@@ -18,6 +18,7 @@ typedef struct {
 } AppState;
 
 AppState initialAppState();
+void resetAppState(AppState *appState);
 void updateAppState(AppState *appState, uint_t previousButtons, uint_t currentButtons); 
 
 // void drawGame(Dino *dino, Enemy enemies[], uint_t previousButtons, uint_t currentButtons);

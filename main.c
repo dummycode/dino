@@ -50,17 +50,7 @@ int main(void) {
         }
         else if (KEY_JUST_PRESSED(BUTTON_START, previousButtons, currentButtons)) {
           // Reset game state
-          //resetGame(enemies);
-          
-//          dino = (Dino) {
-//            STATE_STILL,
-//              (Point) {0, 75}, // Current location
-//              (Point) {0, 0}, // New location
-//              (Vector) {0, 0}, // Current velocity
-//              (Vector) {0, 0}, // New velocity
-//              (Feet) {0, 0},
-//              0,
-//          };
+          resetAppState(&appState);
 
           // Clear screen
           clearScreen();

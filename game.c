@@ -247,8 +247,44 @@ AppState initialAppState() {
   return appState;
 }
 
+/*
+ * Reset app state at beginning of game
+ */
+void resetAppState(AppState *appState) {
+  Dino dino = (Dino) {
+    STATE_LEFT,
+    (Point) {0, 75}, // Current location
+    (Point) {0, 0}, // New location
+    (Vector) {0, 0}, // Current velocity
+    (Vector) {0, 0}, // New velocity
+    (Feet) {0, 0},
+    0,
+  };
+  appState->dino = dino;
+
+  for (unsigned int i = 0; i < NUM_ENEMIES; i++) {
+    appState->enemies[i] = (Enemy) {
+      .alive = false,
+      (Point) {0, 0},
+      (Point) {0, 0},
+      (Vector) {0, 0},
+      (Vector) {0, 0},
+      (Size) {0, 0},
+      NULL,
+    };
+  }
+
+  appState->score = 0;
+}
+
 void updateAppState(AppState *appState, uint_t previousButtons, uint_t currentButtons) {
-  appState->score += 1;
+  // Update score every 16th tick
+  if ((appState->tick & 15) == 0) {
+    // TODO In the future the score should scale with speed
+    appState->score += 1;
+  }
+
+  // Update feet every 8th tick
   if ((appState->tick & 7) == 0) {
     if (appState->dino.state == STATE_LEFT) {
       appState->dino.state = STATE_RIGHT;
