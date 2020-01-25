@@ -28,6 +28,7 @@ void resetGame();
 void updateEnemies(Enemy *enemies);
 // void drawEnemies(Enemy *enemies);
 bool didLose(Dino *dino, Enemy *enemies);
+Enemy getRandomEnemy();
 void updateLocationOfEnemies(Enemy *enemies);
 // void clearOldEnemies(Enemy *enemies);
 

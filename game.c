@@ -161,83 +161,30 @@ volatile int num_enemies = 0;
 //     clearOldEnemy(&enemies[i]);
 //   }
 // }
-// 
-// 
-// /**
-//  * Checks to see if player has lost the game by checking
-//  * to see if the dino is in contact with any enemy
-//  */
-// bool didLose(Dino *dino, Enemy *enemies)
-// {
-//   for (int i = 0; i < MAX_ENEMIES; i++) {
-//     Enemy enemy = enemies[i];
-//     if (enemy.alive) {
-//       // If left corner is in
-//       int x = enemy.p.x;
-//       int y = enemy.p.y;
-//       if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
-//         return true;
-//       }
-//       // Bottom left
-//       x = enemy.p.x;
-//       y = enemy.p.y + enemy.size.height;
-//       if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
-//         return true;
-//       }
-//       // Bottom right
-//       x = enemy.p.x + enemy.size.width;
-//       y = enemy.p.y + enemy.size.height;
-//       if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
-//         return true;
-//       }
-//       // Top right
-//       x = enemy.p.x + enemy.size.width;
-//       y = enemy.p.y;
-//       if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
-//         return true;
-//       }
-//     }
-//   }
-//   return false;
-// }
-// 
-// /**
-//  * Reset the game to new
-//  */
-// void resetGame(Enemy enemies[])
-// {
-//   for (int i = 0; i < MAX_ENEMIES; i++) {
-//     enemies[i].alive = false;
-//   }
-//   num_enemies = 0;
-//   jumped = false;
-//   mult = 0;
-//   score = 0;
-// }
-// 
+
 AppState initialAppState() {
   AppState appState;
 
   Dino dino = (Dino) {
     STATE_LEFT,
-    (Point) {0, 75}, // Current location
-    (Point) {0, 0}, // New location
-    (Vector) {0, 0}, // Current velocity
-    (Vector) {0, 0}, // New velocity
-    (Feet) {0, 0},
-    0,
+      (Point) {0, 75}, // Current location
+      (Point) {0, 0}, // New location
+      (Vector) {0, 0}, // Current velocity
+      (Vector) {0, 0}, // New velocity
+      (Feet) {0, 0},
+      0,
   };
   appState.dino = dino;
 
   for (unsigned int i = 0; i < NUM_ENEMIES; i++) {
     appState.enemies[i] = (Enemy) {
       .alive = false,
-      (Point) {0, 0},
-      (Point) {0, 0},
-      (Vector) {0, 0},
-      (Vector) {0, 0},
-      (Size) {0, 0},
-      NULL,
+        (Point) {0, 0},
+        (Point) {0, 0},
+        (Vector) {0, 0},
+        (Vector) {0, 0},
+        (Size) {0, 0},
+        NULL,
     };
   }
 
@@ -253,24 +200,24 @@ AppState initialAppState() {
 void resetAppState(AppState *appState) {
   Dino dino = (Dino) {
     STATE_LEFT,
-    (Point) {0, 75}, // Current location
-    (Point) {0, 0}, // New location
-    (Vector) {0, 0}, // Current velocity
-    (Vector) {0, 0}, // New velocity
-    (Feet) {0, 0},
-    0,
+      (Point) {0, 75}, // Current location
+      (Point) {0, 0}, // New location
+      (Vector) {0, 0}, // Current velocity
+      (Vector) {0, 0}, // New velocity
+      (Feet) {0, 0},
+      0,
   };
   appState->dino = dino;
 
   for (unsigned int i = 0; i < NUM_ENEMIES; i++) {
     appState->enemies[i] = (Enemy) {
       .alive = false,
-      (Point) {0, 0},
-      (Point) {0, 0},
-      (Vector) {0, 0},
-      (Vector) {0, 0},
-      (Size) {0, 0},
-      NULL,
+        (Point) {0, 0},
+        (Point) {0, 0},
+        (Vector) {0, 0},
+        (Vector) {0, 0},
+        (Size) {0, 0},
+        NULL,
     };
   }
 
@@ -296,5 +243,71 @@ void updateAppState(AppState *appState, uint_t previousButtons, uint_t currentBu
   if (KEY_JUST_PRESSED(BUTTON_UP, previousButtons, currentButtons)) {
     appState->dino.state = STATE_STILL;
   }
+
+  if (didLose(&appState->dino, appState->enemies)) {
+    appState->dino.state = STATE_STILL;
+  }
+
+  if (num_enemies < MAX_ENEMIES) {
+    // Decide if we should place another enemy
+    int p = rand() % (1000 + 1 - 0) + 0;
+    if (p < 10) {
+      getRandomEnemy();
+    }
+  }
 }
 
+/*
+ * Checks if player is contacting an enemy
+ */
+bool didLose(Dino *dino, Enemy *enemies) {
+  for (int i = 0; i < MAX_ENEMIES; i++) {
+    Enemy enemy = enemies[i];
+    if (enemy.alive) {
+      // If left corner is in
+      int x = enemy.p.x;
+      int y = enemy.p.y;
+      if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
+        return true;
+      }
+      // Bottom left
+      x = enemy.p.x;
+      y = enemy.p.y + enemy.size.height;
+      if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
+        return true;
+      }
+      // Bottom right
+      x = enemy.p.x + enemy.size.width;
+      y = enemy.p.y + enemy.size.height;
+      if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
+        return true;
+      }
+      // Top right
+      x = enemy.p.x + enemy.size.width;
+      y = enemy.p.y;
+      if (x > dino->p.x && (x < (dino->p.x + DINO_WIDTH)) && y > dino->p.y && (y < (dino->p.y + DINO_HEIGHT))) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/*
+ * Returns an enemy in a random location
+ */
+Enemy getRandomEnemy() {
+  int yStart = rand() % (65 + 1 - MIN_Y) + MIN_Y;
+  int xVelocity = rand() % (-3 + 1 - (-3)) + (-3);
+  int yVelocity = rand() % (2 + 1 - (-2)) + (-2);
+  Enemy enemy = (Enemy) {
+    true,
+      (Point) {225, yStart},
+      (Point) {0, 0},
+      (Vector) {xVelocity, yVelocity},
+      (Vector) {0, 0},
+      (Size) {15, 15},
+      bird,
+  };
+  return enemy;
+}
