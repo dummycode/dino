@@ -233,11 +233,7 @@ void updateAppState(AppState *appState, uint_t previousButtons, uint_t currentBu
 
   // Update feet every 8th tick
   if ((appState->tick & 7) == 0) {
-    if (appState->dino.state == STATE_LEFT) {
-      appState->dino.state = STATE_RIGHT;
-    } else if (appState->dino.state == STATE_RIGHT) {
-      appState->dino.state = STATE_LEFT;
-    }
+    updateDinoState(&appState->dino);
   }
 
   if (KEY_JUST_PRESSED(BUTTON_UP, previousButtons, currentButtons)) {

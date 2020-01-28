@@ -2,6 +2,7 @@
 #define DINO_H
 
 #include <stdbool.h>
+#include "types.h"
 
 typedef enum {
   STATE_STILL,
