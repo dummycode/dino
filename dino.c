@@ -18,7 +18,7 @@ void dino__update_state(Dino *dino) {
     switch (dino->state) {
         case STATE_STILL:
             // If dino is on the ground, start running!
-            if (dino->p.y == 0 && dino->v.y == 0) {
+            if (dino->p.y == GROUND) {
                 dino->state = STATE_RIGHT;
             }
             break;
