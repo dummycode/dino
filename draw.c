@@ -16,15 +16,16 @@
 #define UNUSED(var) ((void) (var))
 
 void drawAppState(AppState *appState) {
+  waitForVblank();
+
   // Draw ground and clouds
   drawGround();
   
   // Draw dino
-  // clearOldDino(dino);
-  drawDino(&appState->dino);
+  dino__clear_old(&appState->dino);
+  dino__draw(&appState->dino);
   
   // Draw cactuses and (p)terodactyls
-  waitForVblank();
   // clearOldEnemies(enemies);
   drawEnemies(appState->enemies, NUM_ENEMIES);
 
@@ -49,19 +50,6 @@ void drawGround() {
   DMA[3].cnt = SCREEN_WIDTH | DMA_SOURCE_FIXED | DMA_ON;
 }
 
-void drawDino(Dino *dino) {
-  switch (dino->state) {
-    case STATE_STILL:
-      drawImage(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_still);
-      break;
-    case STATE_RIGHT:
-      drawImage(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_right);
-      break;
-    case STATE_LEFT:
-      drawImage(dino->p.y, dino->p.x, DINO_HEIGHT, DINO_WIDTH, dino_left);
-      break;
-  }
-}
 
 void drawEnemies(Enemy *enemies, uint_t num_enemies) {
   UNUSED(enemies);

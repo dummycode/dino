@@ -43,3 +43,4 @@ void drawFullScreenImage(const unsigned short* image) {
 void setPixel(int row, int col, unsigned short color) {
   videoBuffer[OFFSET(row, col, SCREEN_WIDTH)] = color;
 }
+

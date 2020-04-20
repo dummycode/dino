@@ -5,37 +5,35 @@
 #include "types.h"
 
 typedef enum {
-  STATE_STILL,
-  STATE_RIGHT,
-  STATE_LEFT,
+    STATE_STILL,
+    STATE_RIGHT,
+    STATE_LEFT,
 } DinoState;
 
 typedef struct {
-  int x, y;
+    int x, y;
 } Point;
 
 typedef struct {
-  int x, y;
+    int x, y;
 } Vector;
 
 typedef struct {
-  unsigned int left, right;
-} Feet;
-
-typedef struct {
-  DinoState state;
-  Point p;
-  Point np;
-  Vector v;
-  Vector nv;
-  Feet feet;
-  int timeInAir;
+    DinoState state;
+    Point p;
+    Point np;
+    Vector v;
+    Vector nv;
+    int timeInAir;
 } Dino;
 
 // Prototypes
-void updateDinoState(Dino *dino);
-void updateDino(Dino *dino);
-void clearOldDino(Dino *dino);
+void dino__update_state(Dino *dino);
+void dino__jump(Dino *dino);
+void dino__update(Dino *dino);
+void dino__clear_old(Dino *dino);
+void dino__draw(Dino *dino);
+void dino__next(Dino *dino);
 
 extern volatile unsigned short *pcounter;
 
