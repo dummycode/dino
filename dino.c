@@ -17,7 +17,7 @@
 void dino__update_state(Dino *dino) {
     switch (dino->state) {
         case STATE_STILL:
-            // If dino is on the ground, start running!
+            // If dino is on the ground, start running
             if (dino->p.y == GROUND) {
                 dino->state = STATE_RIGHT;
             }
@@ -52,7 +52,7 @@ void dino__update(Dino *dino) {
     dino->np.y = dino->p.y + dino->nv.y;
 
     dino->v = dino->nv;
-   
+
     // Stop once we hit the ground
     if (dino->np.y > GROUND - DINO_HEIGHT) {
         dino->np.y = GROUND - DINO_HEIGHT;

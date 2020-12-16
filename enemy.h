@@ -19,10 +19,11 @@ typedef struct {
     const unsigned short* image;
 } Enemy;
 
-// Prototypes
-void drawEnemy(Enemy *enemy);
-void updateEnemy(Enemy *enemy);
-void clearOldEnemy(Enemy *enemy);
+void enemy__update(Enemy *enemy);
+void enemy__clear_old(Enemy *enemy);
+void enemy__draw(Enemy *enemy);
+void enemy__next(Enemy *enemy);
+Enemy enemy__random();
 
 extern volatile unsigned short *pcounter;
 extern volatile int num_enemies;

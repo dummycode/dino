@@ -7,19 +7,19 @@
 #include "enemy.h"
 
 
-#define NUM_ENEMIES 2
+#define MAX_ENEMIES 2
 
 // Holds the current app state
 typedef struct {
   Dino dino;
-  Enemy enemies[NUM_ENEMIES];
+  Enemy enemies[MAX_ENEMIES];
   uint_t score;
   uint_t tick;
 } AppState;
 
 AppState initialAppState();
 void resetAppState(AppState *appState);
-void updateAppState(AppState *appState, uint_t previousButtons, uint_t currentButtons); 
+void updateAppState(AppState *appState, uint_t previousButtons, uint_t currentButtons);
 
 // void drawGame(Dino *dino, Enemy enemies[], uint_t previousButtons, uint_t currentButtons);
 // void drawScore();

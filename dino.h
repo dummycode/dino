@@ -11,14 +11,6 @@ typedef enum {
 } DinoState;
 
 typedef struct {
-    int x, y;
-} Point;
-
-typedef struct {
-    int x, y;
-} Vector;
-
-typedef struct {
     DinoState state;
     Point p;
     Point np;
@@ -27,7 +19,6 @@ typedef struct {
     int timeInAir;
 } Dino;
 
-// Prototypes
 void dino__update_state(Dino *dino);
 void dino__jump(Dino *dino);
 void dino__update(Dino *dino);

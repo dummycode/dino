@@ -6,7 +6,6 @@
 #include "text.h"
 #include "game.h"
 #include "enemy.h"
-#include "img/bird.h"
 #include "main.h"
 
 #include <stdlib.h>
@@ -14,7 +13,6 @@
 #include <stdbool.h>
 
 #define GROUND 100
-#define MAX_ENEMIES 4
 #define MIN_Y 50
 #define SCORE_DIVIDER 100
 
@@ -31,14 +29,14 @@ AppState initialAppState() {
     Dino dino = (Dino) {
         STATE_LEFT,
         (Point) {0, 75}, // Current location
-        (Point) {0, 0}, // New location
+        (Point) {0, 0},  // New location
         (Vector) {0, 0}, // Current velocity
         (Vector) {0, 0}, // New velocity
         0,
     };
     appState.dino = dino;
 
-    for (unsigned int i = 0; i < NUM_ENEMIES; i++) {
+    for (unsigned int i = 0; i < MAX_ENEMIES; i++) {
         appState.enemies[i] = (Enemy) {
             .alive = false,
             (Point) {0, 0},
@@ -70,7 +68,7 @@ void resetAppState(AppState *appState) {
     };
     appState->dino = dino;
 
-    for (unsigned int i = 0; i < NUM_ENEMIES; i++) {
+    for (unsigned int i = 0; i < MAX_ENEMIES; i++) {
         appState->enemies[i] = (Enemy) {
             .alive = false,
             (Point) {0, 0},
@@ -114,7 +112,13 @@ void updateAppState(AppState *appState, uint_t previousButtons, uint_t currentBu
         // Decide if we should place another enemy
         int p = rand() % (1000 + 1 - 0) + 0;
         if (p < 10) {
-            getRandomEnemy();
+            Enemy new_enemy = enemy__random();
+
+            for (unsigned int i = 0; i < MAX_ENEMIES; i++) {
+                if (!appState->enemies[i].alive) {
+                    appState->enemies[i] = new_enemy;
+                }
+            }
         }
     }
 
@@ -157,21 +161,4 @@ bool didLose(Dino *dino, Enemy *enemies) {
     return false;
 }
 
-/*
- * Returns an enemy in a random location
- */
-Enemy getRandomEnemy() {
-    int yStart = rand() % (65 + 1 - MIN_Y) + MIN_Y;
-    int xVelocity = rand() % (-3 + 1 - (-3)) + (-3);
-    int yVelocity = rand() % (2 + 1 - (-2)) + (-2);
-    Enemy enemy = (Enemy) {
-        true,
-        (Point) {225, yStart},
-        (Point) {0, 0},
-        (Vector) {xVelocity, yVelocity},
-        (Vector) {0, 0},
-        (Size) {15, 15},
-        bird,
-    };
-    return enemy;
-}
+
