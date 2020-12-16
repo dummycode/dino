@@ -1,23 +1,3 @@
-//////////////////////////////////////////////////////////////////////
-//
-//  INDEX
-//
-//////////////////////////////////////////////////////////////////////
-/*
-        General
-        Bitmaps
-        Video
-        Interrupts
-        DMA
-        Input
-        Tiles
-        Sprites
-        Timers
-        Sound
-        Memory
-
-====================================================================*/
-
 // *** General =======================================================
 
 typedef unsigned char u8;
@@ -48,18 +28,11 @@ extern volatile unsigned short *videoBuffer;               // 0x6000000
 #define PALETTE ((volatile unsigned short *)0x5000000)
 #define BACKBUFFER (1<<4)
 
-
-
-
-
 typedef struct { u16 tileimg[8192]; } charblock;
 typedef struct { u16 tilemap[1024]; } screenblock;
 
 extern charblock *charbase;
 extern screenblock *screenbase;
-
-
-
 
 
 //Background Enables
@@ -101,9 +74,6 @@ extern screenblock *screenbase;
 #define HBENABLE (1<<4)  // HBE � enables hblank interrupt
 #define VCENABLE (1<<5)  //	VCE � enables vcount interrupt
 // Note: Bits 6-15			VCOUNT � vertical count value (0-159)
-
-
-
 
 
 // Interrupt constants for checking which type of interrupt happened
@@ -398,7 +368,6 @@ extern double secs_per_tick[4];
 // *** Memory ========================================================
 
 
-
 /*--------------------------------------------------------------------
 IN_<X>WRAM defines.
 
@@ -437,3 +406,4 @@ void waitForVblank();
 
 // Macros
 #define OFFSET(r, c, w) ((r) * (w) + (c))
+

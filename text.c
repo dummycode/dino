@@ -3,6 +3,9 @@
 #include "graphics.h"
 #include "myLib.h"
 
+/**
+ * Draws a character at a given row and column
+ */
 void drawChar(int row, int col, char ch, unsigned short color, unsigned short background) {
     for (int r = 0; r < 8; r++) {
         for (int c = 0; c < 6; c++) {
@@ -15,6 +18,9 @@ void drawChar(int row, int col, char ch, unsigned short color, unsigned short ba
     }
 }
 
+/**
+ * Draws a string at a given row and column
+ */
 void drawString(int row, int col, char str[], unsigned short color, unsigned short background) {
 	for (int i = 0; str[i] != 0; i++) {
 		drawChar(row, col + i * 6, str[i], color, background);
